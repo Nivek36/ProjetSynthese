@@ -21,4 +21,11 @@ public class PlayerController {
                 .map(player1 -> ResponseEntity.status(HttpStatus.CREATED).body(player1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Player()));
     }
+
+    @GetMapping("/{username}/{password}")
+    public ResponseEntity<Player> loginPlayer(@PathVariable String username, @PathVariable String password){
+        return playerService.loginPlayer(username, password)
+                .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Player()));
+    }
 }

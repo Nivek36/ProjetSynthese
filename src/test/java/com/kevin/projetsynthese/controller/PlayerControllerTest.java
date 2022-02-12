@@ -52,4 +52,17 @@ public class PlayerControllerTest {
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(player).isEqualTo(actualPlayer);
     }
+
+    @Test
+    public void loginPlayerTest() throws Exception{
+        when(playerService.loginPlayer(player.getUsername(), player.getPassword())).thenReturn(Optional.of(player));
+
+        MvcResult result = mockMvc.perform(get("/player/{username}/{password}", player.getUsername(), player.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actualPlayer = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Player.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actualPlayer).isEqualTo(player);
+    }
 }

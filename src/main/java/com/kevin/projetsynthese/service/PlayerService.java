@@ -22,4 +22,12 @@ public class PlayerService {
             return Optional.empty();
         }
     }
+
+    public Optional<Player> loginPlayer(String username, String password) {
+        try {
+            return Optional.of(playerRepository.findPlayerByUsernameAndPassword(username, password));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
