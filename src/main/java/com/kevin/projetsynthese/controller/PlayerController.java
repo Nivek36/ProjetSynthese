@@ -19,7 +19,7 @@ public class PlayerController {
     public ResponseEntity<Player> registerPlayer(@RequestBody Player player) {
         return playerService.registerPlayer(player)
                 .map(player1 -> ResponseEntity.status(HttpStatus.CREATED).body(player1))
-                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).body(new Player()));
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
     @GetMapping("/{username}/{password}")

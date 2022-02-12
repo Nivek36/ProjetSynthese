@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
@@ -40,6 +41,13 @@ public class PlayerServiceTest {
         when(playerRepository.save(player)).thenReturn(player);
         Optional<Player> actualPlayer = playerService.registerPlayer(player);
         assertThat(actualPlayer.get()).isEqualTo(player);
+    }
+
+    @Test
+    public void registerDuplicatePlayerFailsTest() {
+        when(playerRepository.save(any())).thenReturn(player).thenReturn(Optional.empty());
+        playerService.registerPlayer(player);
+        assertThat(playerService.registerPlayer(player)).isEmpty();
     }
 
     @Test

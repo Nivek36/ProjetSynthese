@@ -7,10 +7,9 @@ const Registration = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (player) => {
-    console.log(player);
     addPlayer(player)
-      .then((data) => data.username !== undefined ? alert("Registration succeeded") : alert("Username already exists"))
-      .catch(() => alert("Registration failed, please try again"));
+      .then((data) => data.username !== undefined ? alert("Registration succeeded") : alert("Username already exists, please try again"))
+      .catch(() => alert("Username already exists, please try again"));
   }
 
   const addPlayer = async (player) => {
@@ -48,7 +47,7 @@ const Registration = () => {
                 <input type="password" className="form-control" id="password" {...register("password", { required: true })} />
                 {errors.password && <span>This field is required</span>}
               </div>
-              <div class="d-grid gap-2">
+              <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary btn-">Sign up</button>
               </div>
             </form>
