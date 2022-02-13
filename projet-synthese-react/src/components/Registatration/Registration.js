@@ -27,14 +27,14 @@ const Registration = () => {
   return (
     <div className='container-fluid'>
       <div className='row row-cols-2'>
-        <div className='registration shadow-lg rounded-end'>
-          <div className='svg-image-registration text-center'>
+        <div className='registration-login shadow-lg rounded-end'>
+          <div className='text-center'>
             <SvgImage />
           </div>
         </div>
         <div className=''>
-          <h2 className='text-center mt-5 text-color'><span className='badge bg-primary'>Sign up</span> now !</h2>
-          <h2 className='text-center mb-5 text-color'><span className='badge bg-primary'>Play</span> now !</h2>
+          <h2 className='text-center mt-5 text-color'><span className='badge rounded-pill bg-primary'>Sign up</span> now !</h2>
+          <h2 className='text-center mb-5 text-color'><span className='badge rounded-pill bg-primary'>Play</span> now !</h2>
           <div className=''>
             <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>
               <div className="mb-3">
