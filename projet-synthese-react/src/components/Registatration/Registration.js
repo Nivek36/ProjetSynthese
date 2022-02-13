@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import './Registration.css'
 import SvgImage from '../SvgImage';
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin/NavbarRegistrationLogin';
 
 const Registration = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,13 +27,14 @@ const Registration = () => {
 
   return (
     <div className='container-fluid'>
+      <NavbarRegistrationLogin />
       <div className='row row-cols-2'>
         <div className='registration-login shadow-lg rounded-end'>
           <div className='text-center'>
             <SvgImage />
           </div>
         </div>
-        <div className=''>
+        <div className='bg-light'>
           <h2 className='text-center mt-5 text-color'><span className='badge rounded-pill bg-primary'>Sign up</span> now !</h2>
           <h2 className='text-center mb-5 text-color'><span className='badge rounded-pill bg-primary'>Play</span> now !</h2>
           <div className=''>

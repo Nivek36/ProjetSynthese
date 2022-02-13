@@ -2,6 +2,7 @@ import React from 'react';
 import SvgImage from '../SvgImage';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import NavbarRegistrationLogin from '../NavbarRegistrationLogin/NavbarRegistrationLogin';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,8 +20,9 @@ const Login = () => {
 
     return (
         <div className='container-fluid'>
+            <NavbarRegistrationLogin />
             <div className='row row-cols-2'>
-                <div className=''>
+                <div className='bg-light'>
                     <h2 className='text-center mt-5 text-color'>Welcome back !</h2>
                     <h2 className='text-center mb-5 text-color'>On <span className='badge rounded-pill bg-primary'> Quiz.io </span></h2>
                     <div className=''>
