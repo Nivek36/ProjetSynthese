@@ -1,16 +1,23 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import './Registration.css'
 import SvgImage from '../SvgImage';
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin/NavbarRegistrationLogin';
 
 const Registration = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (player) => {
     addPlayer(player)
-      .then((data) => data.username !== undefined ? alert("Registration succeeded") : alert("Username already exists, please try again"))
+      .then((data) => data.username !== undefined ? onRegitrationSucceded() : alert("Username already exists, please try again"))
       .catch(() => alert("Username already exists, please try again"));
+  }
+
+  const onRegitrationSucceded = () => {
+    alert("Thank you for creating an account!");
+    navigate("/")
   }
 
   const addPlayer = async (player) => {
@@ -42,12 +49,12 @@ const Registration = () => {
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">Username</label>
                 <input type="text" className="form-control" id="username" {...register("username", { required: true })} />
-                {errors.username && <span>This field is required</span>}
+                {errors.username && <span className='text-danger'>This field is required</span>}
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
                 <input type="password" className="form-control" id="password" {...register("password", { required: true })} />
-                {errors.password && <span>This field is required</span>}
+                {errors.password && <span className='text-danger'>This field is required</span>}
               </div>
               <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary btn-">Sign up</button>
