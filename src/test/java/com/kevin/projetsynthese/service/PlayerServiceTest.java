@@ -53,7 +53,7 @@ public class PlayerServiceTest {
     @Test
     public void playerLoginTest() {
         when(playerRepository.findPlayerByUsernameAndPassword(player.getUsername(), player.getPassword())).thenReturn(player);
-        Optional<Player> actualStudent = playerService.loginPlayer(player.getUsername(), player.getPassword());
-        assertThat(actualStudent.get()).isEqualTo(player);
+        Optional<Player> actualAdmin = playerService.loginPlayer(player.getUsername(), player.getPassword());
+        assertThat(actualAdmin.get()).isEqualTo(player);
     }
 }

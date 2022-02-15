@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class PlayerController {
 
     @Autowired
-    PlayerService playerService;
+    private PlayerService playerService;
 
     @PostMapping("/register_player")
     public ResponseEntity<Player> registerPlayer(@RequestBody Player player) {
