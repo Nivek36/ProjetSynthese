@@ -5,22 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Quiz {
 
     @Id
     @GeneratedValue
     private int idQuiz;
 
+    @Column(unique = true, length = 200)
     private String name;
 
     @OneToOne
@@ -28,4 +25,12 @@ public class Quiz {
 
     @OneToOne
     private Admin admin;
+
+    @Builder(builderMethodName = "quizBuilder")
+    public Quiz(int idQuiz, String name, Player player, Admin admin) {
+        this.idQuiz = idQuiz;
+        this.name = name;
+        this.player = player;
+        this.admin = admin;
+    }
 }
