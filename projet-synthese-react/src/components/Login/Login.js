@@ -10,7 +10,12 @@ const Login = () => {
 
     const onSubmit = (player) => {
         playerLogin(player.username, player.password)
-            .then((data) => data.username !== null ? navigate("/HomePage") : alert("Wrong username or password"));
+            .then((data) => data.username !== null ? onLoginSucceded(data) : alert("Wrong username or password"));
+    }
+
+    const onLoginSucceded = (data) => {
+        sessionStorage.setItem("user", JSON.stringify(data))
+        navigate("/HomePage")
     }
 
     const playerLogin = async (username, password) => {

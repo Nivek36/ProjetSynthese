@@ -1,8 +1,9 @@
 import React from 'react'
+import PlayerNavbar from '../Player/PlayerNavbar'
 
 const HomePage = () => {
   return (
-    <h1>ALlooooooo</h1>
+    <PlayerNavbar />
   )
 }
 
