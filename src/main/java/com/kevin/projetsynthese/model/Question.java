@@ -14,16 +14,23 @@ import javax.persistence.OneToOne;
 @Entity
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Question {
 
     @Id
     @GeneratedValue
-    private int idQuestions;
+    private int idQuestion;
 
     private String question;
     private String answer;
 
     @OneToOne
     private Quiz quiz;
+
+    @Builder(builderMethodName = "questionBuilder")
+    public Question(int idQuestion, String question, String answer, Quiz quiz) {
+        this.idQuestion = idQuestion;
+        this.question = question;
+        this.answer = answer;
+        this.quiz = quiz;
+    }
 }
