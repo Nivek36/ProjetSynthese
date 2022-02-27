@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import AddNewQuiz from './AddNewQuiz'
 import PlayerNavbar from './PlayerNavbar'
+import { useNavigate } from 'react-router-dom'
 
 const PlayerQuizzes = () => {
     const [quizzes, setQuizzes] = useState([])
     const player = JSON.parse(sessionStorage.getItem("user"))
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getQuizzes = async () => {
@@ -14,8 +16,8 @@ const PlayerQuizzes = () => {
         getQuizzes()
     }, [])
 
-    const fetchQuizzes = async (quizId) => {
-        const res = await fetch(`http://localhost:8888/quiz/get-all-quizzes-by-player/${quizId}`)
+    const fetchQuizzes = async (playerId) => {
+        const res = await fetch(`http://localhost:8888/quiz/get-all-quizzes-by-player/${playerId}`)
         return await res.json()
     }
 
@@ -31,6 +33,8 @@ const PlayerQuizzes = () => {
         const data = await result.json()
 
         setQuizzes(await fetchQuizzes(player.id))
+
+        return data;
     }
 
     return (
@@ -46,9 +50,11 @@ const PlayerQuizzes = () => {
                         <div key={quiz.idQuiz} className="card border-primary mt-3 mx-5 shadow">
                             <div className="card-body">
                                 <h5 className="card-title">{quiz.name}</h5>
-                                <p className="card-text">Some quick</p>
+                                <p className="card-text">Some quick description</p>
                             </div>
-                            <div className="card-footer border-primary">Footer</div>
+                            <div className="card-footer border-primary">
+                                <button className='btn btn-success btn-sm' onClick={e => { e.preventDefault(); navigate('/player-quiz', { state: quiz }) }}>+ Add questions</button>
+                            </div>
                         </div>
                     ))}
             </div>
