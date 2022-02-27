@@ -24,9 +24,9 @@ public class QuizController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @GetMapping("/get-all-quizzes-by-player/{idQuiz}")
-    public ResponseEntity<List<Quiz>> getAllQuizzesByPlayerId(@PathVariable int idQuiz){
-        return quizService.getAllQuizzesByPlayerId(idQuiz)
+    @GetMapping("/get-all-quizzes-by-player/{playerId}")
+    public ResponseEntity<List<Quiz>> getAllQuizzesByPlayerId(@PathVariable int playerId){
+        return quizService.getAllQuizzesByPlayerId(playerId)
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

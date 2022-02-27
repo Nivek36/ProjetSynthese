@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
 public class Question {
 

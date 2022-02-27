@@ -64,9 +64,9 @@ public class QuizControllerTest {
 
     @Test
     public void getAllQuizzesByPlayerIdTest() throws Exception {
-        when(quizService.getAllQuizzesByPlayerId(quiz.getIdQuiz())).thenReturn(Optional.of(getListOfQuizzes()));
+        when(quizService.getAllQuizzesByPlayerId(player.getId())).thenReturn(Optional.of(getListOfQuizzes()));
 
-        MvcResult result = mockMvc.perform(get("/quiz/get-all-quizzes-by-player/{idQuiz}", 1)
+        MvcResult result = mockMvc.perform(get("/quiz/get-all-quizzes-by-player/{playerId}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 

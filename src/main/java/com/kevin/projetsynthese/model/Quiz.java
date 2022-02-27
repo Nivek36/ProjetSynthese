@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Builder
 @NoArgsConstructor
 public class Quiz {
 
