@@ -8,7 +8,12 @@ const AdminLogin = () => {
 
     const onSubmit = (admin) => {
         adminLogin(admin.username, admin.password)
-            .then((data) => data.username !== null ? navigate("/HomePage") : alert("Wrong username or password"));
+            .then((data) => data.username !== null ? onLoginSucceded(data) : alert("Wrong username or password"));
+    }
+
+    const onLoginSucceded = (data) => {
+        sessionStorage.setItem("user", JSON.stringify(data))
+        navigate("/admin-homepage")
     }
 
     const adminLogin = async (username, password) => {

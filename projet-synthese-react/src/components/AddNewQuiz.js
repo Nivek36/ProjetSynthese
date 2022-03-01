@@ -5,7 +5,6 @@ const AddNewQuiz = ({onAddQuiz}) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (quiz) => {
-        quiz.player = JSON.parse(sessionStorage.getItem("user"))
         onAddQuiz(quiz)
             .then((data) => data.name !== undefined ? onCreationSucceded() : alert("Quiz name already exists, please try again"))
             .catch(() => alert("Quiz name already exists, please try again"));

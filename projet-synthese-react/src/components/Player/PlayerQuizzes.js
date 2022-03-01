@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AddNewQuiz from './AddNewQuiz'
+import AddNewQuiz from '../AddNewQuiz'
 import PlayerNavbar from './PlayerNavbar'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,6 +22,7 @@ const PlayerQuizzes = () => {
     }
 
     const addQuiz = async (quiz) => {
+        quiz.player = player
         const result = await fetch('http://localhost:8888/quiz/create_new_quiz',
             {
                 method: 'POST',

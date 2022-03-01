@@ -6,6 +6,8 @@ import Login from './components/Login/Login';
 import AdminLogin from './components/Admin/AdminLogin';
 import PlayerQuizzes from './components/Player/PlayerQuizzes';
 import PlayerQuiz from './components/Player/PlayerQuiz';
+import AdminHomePage from './components/Admin/AdminHomePage';
+import AdminQuizzes from './components/Admin/AdminQuizzes';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/player-quizzes" element={<PlayerQuizzes />} />
         <Route path="/player-quiz" element={<PlayerQuiz />} />
+        <Route path="/admin-homepage" element={<AdminHomePage />} />
+        <Route path="/admin-quizzes" element={<AdminQuizzes />} />
       </Routes>
     </Router>
   );

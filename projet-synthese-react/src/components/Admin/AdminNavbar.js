@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const PlayerNavbar = () => {
-    const player = JSON.parse(sessionStorage.getItem("user"))
-    
+const AdminNavbar = () => {
+    const admin = JSON.parse(sessionStorage.getItem("user"))
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -15,10 +15,10 @@ const PlayerNavbar = () => {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                         <div className="dropdown">
                             <button className="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                {player.username}
+                                {admin.username}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                                <li><Link className="dropdown-item" to="/player-quizzes">My quizzes</Link></li>
+                                <li><Link className="dropdown-item" to="/admin-quizzes">Manage quizzes</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -28,4 +28,4 @@ const PlayerNavbar = () => {
     )
 }
 
-export default PlayerNavbar
+export default AdminNavbar
