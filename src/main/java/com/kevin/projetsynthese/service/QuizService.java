@@ -31,4 +31,12 @@ public class QuizService {
             return Optional.empty();
         }
     }
+
+    public Optional<List<Quiz>> getAllQuizzesByAdminId(int id) {
+        try {
+            return Optional.of(quizRepository.findQuizzesByAdmin_Id(id));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.kevin.projetsynthese.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kevin.projetsynthese.model.Admin;
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.service.QuizService;
@@ -34,6 +35,7 @@ public class QuizControllerTest {
 
     private Quiz quiz;
     private Player player;
+    private Admin admin;
 
     @BeforeEach
     void setup() {
@@ -46,6 +48,12 @@ public class QuizControllerTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .build();
+
+        admin = Admin.adminBuilder()
+                .id(1)
+                .password("1234")
+                .username("admin")
                 .build();
     }
 
@@ -64,7 +72,7 @@ public class QuizControllerTest {
 
     @Test
     public void getAllQuizzesByPlayerIdTest() throws Exception {
-        when(quizService.getAllQuizzesByPlayerId(player.getId())).thenReturn(Optional.of(getListOfQuizzes()));
+        when(quizService.getAllQuizzesByPlayerId(player.getId())).thenReturn(Optional.of(getListOfQuizzesByPlayer()));
 
         MvcResult result = mockMvc.perform(get("/quiz/get-all-quizzes-by-player/{playerId}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -75,7 +83,20 @@ public class QuizControllerTest {
         assertThat(actuals.size()).isEqualTo(3);
     }
 
-    private List<Quiz> getListOfQuizzes() {
+    @Test
+    public void getAllQuizzesByAdminIdTest() throws Exception {
+        when(quizService.getAllQuizzesByAdminId(admin.getId())).thenReturn(Optional.of(getListOfQuizzesByAdmin()));
+
+        MvcResult result = mockMvc.perform(get("/quiz/get-all-quizzes-by-admin/{adminId}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    private List<Quiz> getListOfQuizzesByPlayer() {
         List<Quiz> quizList = new ArrayList<>();
         quizList.add(Quiz.quizBuilder()
                 .idQuiz(1)
@@ -91,6 +112,26 @@ public class QuizControllerTest {
                 .idQuiz(3)
                 .name("Quiz3")
                 .player(player)
+                .build());
+        return quizList;
+    }
+
+    private List<Quiz> getListOfQuizzesByAdmin() {
+        List<Quiz> quizList = new ArrayList<>();
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Quiz1")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(2)
+                .name("Quiz2")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(3)
+                .name("Quiz3")
+                .admin(admin)
                 .build());
         return quizList;
     }

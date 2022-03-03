@@ -30,4 +30,11 @@ public class QuizController {
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/get-all-quizzes-by-admin/{adminId}")
+    public ResponseEntity<List<Quiz>> getAllQuizzesByAdminId(@PathVariable int adminId){
+        return quizService.getAllQuizzesByAdminId(adminId)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

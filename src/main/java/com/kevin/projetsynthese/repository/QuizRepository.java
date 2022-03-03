@@ -10,4 +10,5 @@ import java.util.List;
 public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 
     List<Quiz> findQuizzesByPlayerId(int id);
+    List<Quiz> findQuizzesByAdmin_Id(int id);
 }

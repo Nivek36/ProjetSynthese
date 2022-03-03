@@ -1,5 +1,6 @@
 package com.kevin.projetsynthese.service;
 
+import com.kevin.projetsynthese.model.Admin;
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.repository.QuizRepository;
@@ -29,6 +30,7 @@ public class QuizServiceTest {
 
     private Quiz quiz;
     private Player player;
+    private Admin admin;
 
     @BeforeEach
     void setup() {
@@ -41,6 +43,12 @@ public class QuizServiceTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .build();
+
+        admin = Admin.adminBuilder()
+                .id(1)
+                .password("1234")
+                .username("admin")
                 .build();
     }
 
@@ -60,13 +68,21 @@ public class QuizServiceTest {
 
     @Test
     public void getAllQuizzesByPlayerIdTest(){
-        when(quizRepository.findQuizzesByPlayerId(player.getId())).thenReturn(getListOfQuizzes());
+        when(quizRepository.findQuizzesByPlayerId(player.getId())).thenReturn(getListOfQuizzesByPlayer());
         final Optional<List<Quiz>> allQuizzes = quizService.getAllQuizzesByPlayerId(player.getId());
         assertThat(allQuizzes.get().size()).isEqualTo(3);
         assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
     }
 
-    private List<Quiz> getListOfQuizzes() {
+    @Test
+    public void getAllQuizzesByAdminIdTest(){
+        when(quizRepository.findQuizzesByAdmin_Id(admin.getId())).thenReturn(getListOfQuizzesByAdmin());
+        final Optional<List<Quiz>> allQuizzes = quizService.getAllQuizzesByAdminId(admin.getId());
+        assertThat(allQuizzes.get().size()).isEqualTo(3);
+        assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
+    }
+
+    private List<Quiz> getListOfQuizzesByPlayer() {
         List<Quiz> quizList = new ArrayList<>();
         quizList.add(Quiz.quizBuilder()
                 .idQuiz(1)
@@ -82,6 +98,26 @@ public class QuizServiceTest {
                 .idQuiz(3)
                 .name("Quiz3")
                 .player(player)
+                .build());
+        return quizList;
+    }
+
+    private List<Quiz> getListOfQuizzesByAdmin() {
+        List<Quiz> quizList = new ArrayList<>();
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Quiz1")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(2)
+                .name("Quiz2")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(3)
+                .name("Quiz3")
+                .admin(admin)
                 .build());
         return quizList;
     }
