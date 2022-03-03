@@ -5,7 +5,7 @@ import Registration from './components/Registatration/Registration';
 import Login from './components/Login/Login';
 import AdminLogin from './components/Admin/AdminLogin';
 import PlayerQuizzes from './components/Player/PlayerQuizzes';
-import PlayerQuiz from './components/Player/PlayerQuiz';
+import Quiz from './components/Quiz';
 import AdminHomePage from './components/Admin/AdminHomePage';
 import AdminQuizzes from './components/Admin/AdminQuizzes';
 
@@ -18,7 +18,7 @@ function App() {
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/player-quizzes" element={<PlayerQuizzes />} />
-        <Route path="/player-quiz" element={<PlayerQuiz />} />
+        <Route path="/quiz" element={<Quiz />} />
         <Route path="/admin-homepage" element={<AdminHomePage />} />
         <Route path="/admin-quizzes" element={<AdminQuizzes />} />
       </Routes>

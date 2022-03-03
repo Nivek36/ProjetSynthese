@@ -53,8 +53,8 @@ const PlayerQuizzes = () => {
                                 <h5 className="card-title">{quiz.name}</h5>
                                 <p className="card-text">Some quick description</p>
                             </div>
-                            <div className="card-footer border-primary">
-                                <button className='btn btn-success btn-sm' onClick={e => { e.preventDefault(); navigate('/player-quiz', { state: quiz }) }}>+ Add questions</button>
+                            <div className="card-footer border-primary justify-content-end d-flex">
+                                <button className='btn btn-success btn-sm' onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}>+ Add questions</button>
                             </div>
                         </div>
                     ))}

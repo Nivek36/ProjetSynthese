@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
-import PlayerNavbar from './PlayerNavbar'
+import PlayerNavbar from './Player/PlayerNavbar'
 
-const PlayerQuiz = () => {
+const Quiz = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const quiz = location.state
@@ -82,4 +82,4 @@ const PlayerQuiz = () => {
   )
 }
 
-export default PlayerQuiz
+export default Quiz
