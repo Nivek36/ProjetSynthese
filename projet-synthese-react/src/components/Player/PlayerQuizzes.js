@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AddNewQuiz from '../AddNewQuiz'
+import AddNewQuiz from '../Quiz/AddNewQuiz'
 import PlayerNavbar from './PlayerNavbar'
 import { useNavigate } from 'react-router-dom'
 

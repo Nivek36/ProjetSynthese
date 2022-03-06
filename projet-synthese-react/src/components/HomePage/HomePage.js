@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import PlayerNavbar from '../Player/PlayerNavbar'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
     const [publishedQuizzes, setPublishedQuizzes] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getPublishedQuizzes = async () => {
@@ -33,7 +35,11 @@ const HomePage = () => {
                                         <h5 className="card-title text-center">{quiz.name}</h5>
                                         <p className="card-text text-center">Some quick description</p>
                                         <div className='d-flex justify-content-center'>
-                                            <button className='btn btn-primary'>Play !</button>
+                                            <button
+                                                className='btn btn-primary'
+                                                onClick={e => { e.preventDefault(); navigate('/play-quiz', { state: quiz }) }}>
+                                                Play !
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
-import AddNewQuiz from '../AddNewQuiz'
+import AddNewQuiz from '../Quiz/AddNewQuiz'
 import { useNavigate } from 'react-router-dom'
 
 const AdminQuizzes = () => {

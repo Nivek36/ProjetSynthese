@@ -5,9 +5,10 @@ import Registration from './components/Registatration/Registration';
 import Login from './components/Login/Login';
 import AdminLogin from './components/Admin/AdminLogin';
 import PlayerQuizzes from './components/Player/PlayerQuizzes';
-import Quiz from './components/Quiz';
+import Quiz from './components/Quiz/Quiz';
 import AdminHomePage from './components/Admin/AdminHomePage';
 import AdminQuizzes from './components/Admin/AdminQuizzes';
+import PlayQuiz from './components/Quiz/PlayQuiz';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/admin-homepage" element={<AdminHomePage />} />
         <Route path="/admin-quizzes" element={<AdminQuizzes />} />
+        <Route path="/play-quiz" element={<PlayQuiz />} />
       </Routes>
     </Router>
   );
