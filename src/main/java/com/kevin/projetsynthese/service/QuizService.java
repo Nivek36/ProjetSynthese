@@ -40,6 +40,14 @@ public class QuizService {
         }
     }
 
+    public Optional<List<Quiz>> getAllPublishedQuizzes() {
+        try {
+            return Optional.of(quizRepository.findQuizzesByIsPublishedTrue());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Quiz> publishQuiz(int idQuiz) {
         try {
             Optional<Quiz> quiz = quizRepository.findById(idQuiz);

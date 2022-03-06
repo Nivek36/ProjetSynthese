@@ -83,6 +83,14 @@ public class QuizServiceTest {
     }
 
     @Test
+    public void getAllPublishedQuizzesTest(){
+        when(quizRepository.findQuizzesByIsPublishedTrue()).thenReturn(getListOfPublishedQuizzes());
+        final Optional<List<Quiz>> allQuizzes = quizService.getAllPublishedQuizzes();
+        assertThat(allQuizzes.get().size()).isEqualTo(3);
+        assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
+    }
+
+    @Test
     public void publishQuizTest() {
         when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
         when(quizRepository.save(quiz)).thenReturn(quiz);
@@ -134,6 +142,26 @@ public class QuizServiceTest {
                 .idQuiz(3)
                 .name("Quiz3")
                 .admin(admin)
+                .build());
+        return quizList;
+    }
+
+    private List<Quiz> getListOfPublishedQuizzes() {
+        List<Quiz> quizList = new ArrayList<>();
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Quiz1")
+                .isPublished(true)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(2)
+                .name("Quiz2")
+                .isPublished(true)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(3)
+                .name("Quiz3")
+                .isPublished(true)
                 .build());
         return quizList;
     }

@@ -38,6 +38,13 @@ public class QuizController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @GetMapping("/get-all-published-quizzes")
+    public ResponseEntity<List<Quiz>> getAllPublishedQuizzes(){
+        return quizService.getAllPublishedQuizzes()
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @PutMapping("/publish-quiz/{idQuiz}")
     public ResponseEntity<Quiz> publishQuiz(@PathVariable int idQuiz){
         return quizService.publishQuiz(idQuiz)
