@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
-import PlayerNavbar from './Player/PlayerNavbar'
 
 const Quiz = () => {
   const navigate = useNavigate();
@@ -48,7 +47,6 @@ const Quiz = () => {
 
   return (
     <div>
-      <PlayerNavbar />
       <h2 className='mb-5 text-center'>{quiz.name}</h2>
       <div className='mx-5'>
         <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>

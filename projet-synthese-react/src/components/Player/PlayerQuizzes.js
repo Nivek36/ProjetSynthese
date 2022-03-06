@@ -21,6 +21,11 @@ const PlayerQuizzes = () => {
         return await res.json()
     }
 
+    const fetchQuestions = async (quizId) => {
+        const res = await fetch(`http://localhost:8888/question/get-all-questions-by-quiz/${quizId}`)
+        return await res.json()
+    }
+
     const addQuiz = async (quiz) => {
         quiz.player = player
         const result = await fetch('http://localhost:8888/quiz/create_new_quiz',
@@ -36,6 +41,32 @@ const PlayerQuizzes = () => {
         setQuizzes(await fetchQuizzes(player.id))
 
         return data;
+    }
+
+    const publishQuiz = async (quiz) => {
+        const questionsFromServer = await fetchQuestions(quiz.idQuiz)
+        const isQuizNotEmpty = questionsFromServer.length > 0
+        
+        if (isQuizNotEmpty) {
+            const res = await fetch(`http://localhost:8888/quiz/publish-quiz/${quiz.idQuiz}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(quiz)
+                })
+            const data = await res.json()
+
+            setQuizzes(
+                quizzes.map(
+                    (quiz1) => quiz1.idQuiz === quiz.idQuiz ? { ...quiz1, published: data.published } : quiz1
+                )
+            )
+
+            return data
+        }
+        alert("Quiz is empty!")
     }
 
     return (
@@ -54,7 +85,18 @@ const PlayerQuizzes = () => {
                                 <p className="card-text">Some quick description</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
-                                <button className='btn btn-success btn-sm' onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}>+ Add questions</button>
+                                <button
+                                    className='btn btn-secondary btn-sm mx-2'
+                                    onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}
+                                    disabled={quiz.published ? true : false}>
+                                    + Add questions
+                                </button>
+                                <button
+                                    className={`btn ${quiz.published ? 'btn-success' : 'btn-warning'}  btn-sm mx-2`}
+                                    onClick={e => { e.preventDefault(); publishQuiz(quiz) }}
+                                    disabled={quiz.published ? true : false}>
+                                    {quiz.published ? 'Published' : 'Publish'}
+                                </button>
                             </div>
                         </div>
                     ))}
