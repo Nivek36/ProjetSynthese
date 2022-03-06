@@ -82,6 +82,22 @@ public class QuizServiceTest {
         assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
     }
 
+    @Test
+    public void publishQuizTest() {
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        when(quizRepository.save(quiz)).thenReturn(quiz);
+        Optional<Quiz> actualQuiz = quizService.publishQuiz(quiz.getIdQuiz());
+        assertThat(actualQuiz.get().isPublished()).isTrue();
+    }
+
+    @Test
+    public void publishQuizTestFails() {
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        when(quizRepository.save(quiz)).thenReturn(null);
+        Optional<Quiz> actualQuiz = quizService.publishQuiz(quiz.getIdQuiz());
+        assertThat(actualQuiz).isEqualTo(Optional.empty());
+    }
+
     private List<Quiz> getListOfQuizzesByPlayer() {
         List<Quiz> quizList = new ArrayList<>();
         quizList.add(Quiz.quizBuilder()

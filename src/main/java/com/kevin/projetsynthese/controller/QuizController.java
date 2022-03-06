@@ -37,4 +37,11 @@ public class QuizController {
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @PutMapping("/publish-quiz/{idQuiz}")
+    public ResponseEntity<Quiz> publishQuiz(@PathVariable int idQuiz){
+        return quizService.publishQuiz(idQuiz)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

@@ -21,8 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(QuizController.class)
 public class QuizControllerTest {
@@ -94,6 +93,19 @@ public class QuizControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void publishQuizTest() throws Exception {
+        when(quizService.publishQuiz(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+
+        MvcResult result = mockMvc.perform(put("/quiz/publish-quiz/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(quiz))).andReturn();
+
+        var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(quiz).isEqualTo(actualQuiz);
     }
 
     private List<Quiz> getListOfQuizzesByPlayer() {

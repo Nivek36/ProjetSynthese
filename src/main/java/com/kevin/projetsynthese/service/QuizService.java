@@ -39,4 +39,14 @@ public class QuizService {
             return Optional.empty();
         }
     }
+
+    public Optional<Quiz> publishQuiz(int idQuiz) {
+        try {
+            Optional<Quiz> quiz = quizRepository.findById(idQuiz);
+            quiz.get().setPublished(true);
+            return Optional.of(quizRepository.save(quiz.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

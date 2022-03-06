@@ -19,6 +19,8 @@ public class Quiz {
     @Column(unique = true, length = 200)
     private String name;
 
+    private boolean isPublished;
+
     @OneToOne
     private Player player;
 
@@ -26,9 +28,10 @@ public class Quiz {
     private Admin admin;
 
     @Builder(builderMethodName = "quizBuilder")
-    public Quiz(int idQuiz, String name, Player player, Admin admin) {
+    public Quiz(int idQuiz, String name, boolean isPublished, Player player, Admin admin) {
         this.idQuiz = idQuiz;
         this.name = name;
+        this.isPublished = isPublished;
         this.player = player;
         this.admin = admin;
     }
