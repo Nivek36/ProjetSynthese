@@ -1,8 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AdminNavbar = () => {
     const admin = JSON.parse(sessionStorage.getItem("user"))
+    const navigate = useNavigate()
+
+    const logout = () => {
+        sessionStorage.setItem('user', "")
+        navigate('/AdminLogin')
+    }
 
     return (
         <div>
@@ -20,6 +26,13 @@ const AdminNavbar = () => {
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li><Link className="dropdown-item" to="/admin-quizzes">Manage quizzes</Link></li>
+                                <li>
+                                    <button
+                                        className="dropdown-item text-danger"
+                                        onClick={e => { e.preventDefault(); logout() }}>
+                                        Logout
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>

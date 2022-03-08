@@ -1,10 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../../App.css'
 
 const PlayerNavbar = () => {
     const player = JSON.parse(sessionStorage.getItem("user"))
-    
+    const navigate = useNavigate()
+
+    const logout = () => {
+        sessionStorage.setItem('user', "")
+        navigate('/')
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-light shadow mb-5">
@@ -21,6 +27,13 @@ const PlayerNavbar = () => {
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li><Link className="dropdown-item" to="/player-quizzes">My quizzes</Link></li>
+                                <li>
+                                    <button
+                                        className="dropdown-item text-danger"
+                                        onClick={e => { e.preventDefault(); logout() }}>
+                                        Logout
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
