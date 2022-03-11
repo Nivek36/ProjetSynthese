@@ -3,6 +3,7 @@ import SvgImage from '../SvgImage';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin/NavbarRegistrationLogin';
+import Footer from '../Footer/Footer';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -54,6 +55,7 @@ const Login = () => {
                     </div>
                 </div>
             </div >
+            <Footer />
         </div >
     )
 }

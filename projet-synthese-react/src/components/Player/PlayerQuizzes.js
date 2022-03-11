@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AddNewQuiz from '../Quiz/AddNewQuiz'
 import PlayerNavbar from './PlayerNavbar'
 import { useNavigate } from 'react-router-dom'
+import Footer from '../Footer/Footer'
 
 const PlayerQuizzes = () => {
     const [quizzes, setQuizzes] = useState([])
@@ -46,7 +47,7 @@ const PlayerQuizzes = () => {
     const publishQuiz = async (quiz) => {
         const questionsFromServer = await fetchQuestions(quiz.idQuiz)
         const isQuizNotEmpty = questionsFromServer.length > 0
-        
+
         if (isQuizNotEmpty) {
             const res = await fetch(`http://localhost:8888/quiz/publish-quiz/${quiz.idQuiz}`,
                 {
@@ -101,6 +102,7 @@ const PlayerQuizzes = () => {
                         </div>
                     ))}
             </div>
+            <Footer />
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import Footer from '../Footer/Footer';
 
 const AdminLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -42,6 +43,7 @@ const AdminLogin = () => {
                     </div>
                 </div>
             </form>
+            <Footer />
         </div>
     )
 }

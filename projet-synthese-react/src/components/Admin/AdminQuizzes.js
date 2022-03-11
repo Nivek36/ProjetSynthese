@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
 import AddNewQuiz from '../Quiz/AddNewQuiz'
 import { useNavigate } from 'react-router-dom'
+import Footer from '../Footer/Footer'
 
 const AdminQuizzes = () => {
     const [quizzes, setQuizzes] = useState([])
@@ -46,7 +47,7 @@ const AdminQuizzes = () => {
     const publishQuiz = async (quiz) => {
         const questionsFromServer = await fetchQuestions(quiz.idQuiz)
         const isQuizNotEmpty = questionsFromServer.length > 0
-        
+
         if (isQuizNotEmpty) {
             const res = await fetch(`http://localhost:8888/quiz/publish-quiz/${quiz.idQuiz}`,
                 {
@@ -85,7 +86,7 @@ const AdminQuizzes = () => {
                                 <p className="card-text">Some quick description</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
-                            <button
+                                <button
                                     className='btn btn-secondary btn-sm mx-2'
                                     onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}
                                     disabled={quiz.published ? true : false}>
@@ -101,6 +102,7 @@ const AdminQuizzes = () => {
                         </div>
                     ))}
             </div>
+            <Footer />
         </div>
     )
 }

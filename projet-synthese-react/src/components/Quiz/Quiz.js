@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
+import Footer from '../Footer/Footer';
 
 const Quiz = () => {
     const navigate = useNavigate();
@@ -47,23 +48,34 @@ const Quiz = () => {
 
     return (
         <div>
-            <h2 className='mb-5 text-center'>{quiz.name}</h2>
+            <h2 className='my-5 text-center'>{quiz.name}</h2>
+            <div>
+                <button
+                    className='btn btn-secondary mb-5 mx-5'
+                    onClick={e => { e.preventDefault(); navigate(-1) }}>
+                    Go back
+                </button>
+            </div>
             <div className='mx-5'>
-                <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>
-                    <div className="mb-3">
-                        <label htmlFor="question" className="form-label">Question: </label>
-                        <input type="text" className="form-control" id="question" {...register("question", { required: true })} />
-                        {errors.question && <span className='text-danger'>This field is required</span>}
+                <div class="card border-secondary bg-light shadow">
+                    <div class="card-body">
+                        <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>
+                            <div className="mb-3">
+                                <label htmlFor="question" className="form-label">Question: </label>
+                                <input type="text" className="form-control" id="question" {...register("question", { required: true })} />
+                                {errors.question && <span className='text-danger'>This field is required</span>}
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="answer" className="form-label">Answer: </label>
+                                <input type="text" className="form-control" id="answer" {...register("answer", { required: true })} />
+                                {errors.answer && <span className='text-danger'>This field is required</span>}
+                            </div>
+                            <div className="d-grid gap-2">
+                                <button type="submit" className="btn btn-primary">Add question</button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="answer" className="form-label">Answer: </label>
-                        <input type="text" className="form-control" id="answer" {...register("answer", { required: true })} />
-                        {errors.answer && <span className='text-danger'>This field is required</span>}
-                    </div>
-                    <div className="d-grid gap-2">
-                        <button type="submit" className="btn btn-primary">Add question</button>
-                    </div>
-                </form>
+                </div>
             </div>
             <div>
                 {questions
@@ -76,6 +88,7 @@ const Quiz = () => {
                         </div>
                     ))}
             </div>
+            <Footer />
         </div>
     )
 }

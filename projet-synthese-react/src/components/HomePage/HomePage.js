@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PlayerNavbar from '../Player/PlayerNavbar'
 import { useNavigate } from 'react-router-dom'
+import Footer from '../Footer/Footer'
 
 const HomePage = () => {
     const [publishedQuizzes, setPublishedQuizzes] = useState([])
@@ -47,6 +48,7 @@ const HomePage = () => {
                         ))}
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }
