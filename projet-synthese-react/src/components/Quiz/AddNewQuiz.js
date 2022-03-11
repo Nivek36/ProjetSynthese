@@ -30,12 +30,16 @@ const AddNewQuiz = ({onAddQuiz}) => {
                         <div className="modal-body">
                             <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>
                                 <div className="mb-3">
-                                    <label htmlFor="username" className="form-label">Quiz name: </label>
-                                    <input type="text" className="form-control" id="username" {...register("name", { required: true })} />
-                                    {errors.username && <span className='text-danger'>This field is required</span>}
+                                    <label htmlFor="name" className="form-label">Quiz name: </label>
+                                    <input type="text" className="form-control" id="name" {...register("name", { required: true })} />
+                                    {errors.name && <span className='text-danger'>This field is required</span>}
                                 </div>
-                                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                                <div className="mb-3">
+                                    <label htmlFor="description" className="form-label">Description: </label>
+                                    <textarea type="text" className="form-control" id="description" {...register("description")} />
+                                </div>
                                 <button type="submit" className="btn btn-success me-2">Create</button>
+                                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
                             </form>
                         </div>
                     </div>

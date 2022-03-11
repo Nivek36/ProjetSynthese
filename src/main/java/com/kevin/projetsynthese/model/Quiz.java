@@ -16,8 +16,11 @@ public class Quiz {
     @GeneratedValue
     private int idQuiz;
 
-    @Column(unique = true, length = 200)
+    @Column(unique = true, length = 50)
     private String name;
+
+    @Column(length = 100)
+    private String description;
 
     private boolean isPublished;
 
@@ -28,9 +31,10 @@ public class Quiz {
     private Admin admin;
 
     @Builder(builderMethodName = "quizBuilder")
-    public Quiz(int idQuiz, String name, boolean isPublished, Player player, Admin admin) {
+    public Quiz(int idQuiz, String name, String description, boolean isPublished, Player player, Admin admin) {
         this.idQuiz = idQuiz;
         this.name = name;
+        this.description = description;
         this.isPublished = isPublished;
         this.player = player;
         this.admin = admin;
