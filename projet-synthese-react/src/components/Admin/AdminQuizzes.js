@@ -73,7 +73,7 @@ const AdminQuizzes = () => {
     return (
         <div>
             <AdminNavbar />
-            <div>
+            <div className="mb-5">
                 <h2 className='text-center mb-5'>Manage quizzes</h2>
                 <div className='mx-5 mb-2'>
                     <AddNewQuiz onAddQuiz={addQuiz} />
@@ -83,7 +83,7 @@ const AdminQuizzes = () => {
                         <div key={quiz.idQuiz} className="card border-primary mt-3 mx-5 shadow">
                             <div className="card-body">
                                 <h5 className="card-title">{quiz.name}</h5>
-                                <p className="card-text">Some quick description</p>
+                                <p className="card-text">{quiz.description}</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
                                 <button

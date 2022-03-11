@@ -73,7 +73,7 @@ const PlayerQuizzes = () => {
     return (
         <div>
             <PlayerNavbar />
-            <div>
+            <div className="mb-5">
                 <h2 className='text-center mb-5'>My quizzes</h2>
                 <div className='mx-5 mb-2'>
                     <AddNewQuiz onAddQuiz={addQuiz} />

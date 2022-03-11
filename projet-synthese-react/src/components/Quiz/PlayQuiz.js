@@ -64,7 +64,8 @@ const PlayQuiz = () => {
 
     return (
         <div>
-            <h2 className='text-center text-color my-5'>{quiz.name}</h2>
+            <h2 className='text-center text-color mt-5'>{quiz.name}</h2>
+            <h5 className='text-center text-color mb-5'>{quiz.description}</h5>
             <div className="progress mx-5 mb-5">
                 <div className="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style={{ width: `${progressValue}%` }} aria-valuenow={progressValue} aria-valuemin="0" aria-valuemax="100"></div>
             </div>
