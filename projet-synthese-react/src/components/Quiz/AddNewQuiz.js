@@ -17,7 +17,7 @@ const AddNewQuiz = ({onAddQuiz}) => {
     return (
         <div>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                + New quiz
+            <i className="fas fa-plus"></i> New quiz
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -39,7 +39,6 @@ const AddNewQuiz = ({onAddQuiz}) => {
                                     <textarea type="text" className="form-control" id="description" {...register("description")} />
                                 </div>
                                 <button type="submit" className="btn btn-success me-2">Create</button>
-                                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
                             </form>
                         </div>
                     </div>

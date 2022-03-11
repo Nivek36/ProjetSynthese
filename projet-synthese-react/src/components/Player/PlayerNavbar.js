@@ -31,7 +31,7 @@ const PlayerNavbar = () => {
                                     <button
                                         className="dropdown-item text-danger"
                                         onClick={e => { e.preventDefault(); logout() }}>
-                                        Logout
+                                        <i className="fas fa-arrow-right-to-bracket"></i> Logout
                                     </button>
                                 </li>
                             </ul>

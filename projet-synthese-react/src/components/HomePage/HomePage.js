@@ -23,7 +23,7 @@ const HomePage = () => {
     return (
         <div>
             <PlayerNavbar />
-            <div>
+            <div className='mb-5'>
                 <h2 className='text-center mb-5 text-color'>
                     Find your favorite <span className='badge rounded-pill bg-primary'>Quiz</span> and <span className='badge rounded-pill bg-primary'>Play</span> !
                 </h2>
@@ -34,7 +34,8 @@ const HomePage = () => {
                                 <div className="card border-primary mt-3 mx-2 shadow">
                                     <div className="card-body">
                                         <h5 className="card-title text-center">{quiz.name}</h5>
-                                        <p className="card-text text-center">Some quick description</p>
+                                        <p className="card-text text-center">{quiz.description}</p>
+                                        <p className="card-text text-center">By: {quiz.player != null ? quiz.player.username : "Quiz.io"}</p>
                                         <div className='d-flex justify-content-center'>
                                             <button
                                                 className='btn btn-primary'

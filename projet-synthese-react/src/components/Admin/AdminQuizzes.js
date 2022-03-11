@@ -90,7 +90,7 @@ const AdminQuizzes = () => {
                                     className='btn btn-secondary btn-sm mx-2'
                                     onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}
                                     disabled={quiz.published ? true : false}>
-                                    + Add questions
+                                    <i className="fas fa-plus"></i> Add questions
                                 </button>
                                 <button
                                     className={`btn ${quiz.published ? 'btn-success' : 'btn-warning'}  btn-sm mx-2`}

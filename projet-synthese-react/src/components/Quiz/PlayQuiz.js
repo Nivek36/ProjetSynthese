@@ -105,7 +105,7 @@ const PlayQuiz = () => {
                         ))}
                 </div>
                 <div className='d-flex justify-content-between m-5'>
-                    <Link className='btn btn-secondary' to='/HomePage'>Leave</Link>
+                    <Link className='btn btn-secondary' to='/HomePage'><i className="fas fa-angles-left"></i> Leave</Link>
                     <h4>Your score: {totalGoodAnswers + "/" + questions.length}</h4>
                 </div>
             </div>

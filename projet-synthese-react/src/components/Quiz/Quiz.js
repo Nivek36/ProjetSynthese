@@ -53,7 +53,7 @@ const Quiz = () => {
                 <button
                     className='btn btn-secondary mb-5 mx-5'
                     onClick={e => { e.preventDefault(); navigate(-1) }}>
-                    Go back
+                    <i className="fas fa-angles-left"></i> Go back
                 </button>
             </div>
             <div className='mx-5'>
@@ -71,7 +71,7 @@ const Quiz = () => {
                                 {errors.answer && <span className='text-danger'>This field is required</span>}
                             </div>
                             <div className="d-grid gap-2">
-                                <button type="submit" className="btn btn-primary">Add question</button>
+                                <button type="submit" className="btn btn-primary"><i className="fas fa-plus"></i> Add question</button>
                             </div>
                         </form>
                     </div>

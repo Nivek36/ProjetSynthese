@@ -28,12 +28,12 @@ const AdminLogin = () => {
                 <div className="card mx-5 bg-light">
                     <div className="card-body">
                         <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Username</label>
+                            <label htmlFor="username" className="form-label"><i className="fas fa-user"></i> Username: </label>
                             <input type="text" className="form-control" id="username" {...register("username", { required: true })} />
                             {errors.username && <span className='text-danger'>This field is required</span>}
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password</label>
+                            <label htmlFor="password" className="form-label"><i className="fas fa-lock"></i> Password: </label>
                             <input type="password" className="form-control" id="password" {...register("password", { required: true })} />
                             {errors.password && <span className='text-danger'>This field is required</span>}
                         </div>
