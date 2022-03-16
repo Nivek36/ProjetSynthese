@@ -46,6 +46,19 @@ const Quiz = () => {
         return data;
     }
 
+    const deleteQuestion = async (questionId) => {
+        const result = await fetch(`http://localhost:8888/question/delete-question/${questionId}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(questionId)
+            })
+        
+        setQuestions(await fetchQuestions(quiz.idQuiz))
+    }
+
     return (
         <div>
             <h2 className='my-5 text-center'>{quiz.name}</h2>
@@ -84,6 +97,19 @@ const Quiz = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{question.question}</h5>
                                 <p className="card-text">{question.answer}</p>
+                            </div>
+                            <div className="card-footer border-secondary justify-content-end d-flex">
+                                <button
+                                    className='btn btn-secondary btn-sm mx-2'
+                                    onClick={e => { e.preventDefault();  }}
+                                    disabled={quiz.published ? true : false}>
+                                    <i className="fas fa-pen"></i> Modify
+                                </button>
+                                <button
+                                    className='btn btn-danger btn-sm mx-2'
+                                    onClick={e => { e.preventDefault(); deleteQuestion(question.idQuestion) }}>
+                                    <i className="fas fa-xmark"></i> Delete
+                                </button>
                             </div>
                         </div>
                     ))}

@@ -31,4 +31,9 @@ public class QuestionController {
                 .map(questionList -> ResponseEntity.status(HttpStatus.OK).body(questionList))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @DeleteMapping("/delete-question/{questionId}")
+    public void deleteQuestion(@PathVariable int questionId){
+        questionService.deleteQuestion(questionId);
+    }
 }

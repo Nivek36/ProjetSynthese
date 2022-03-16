@@ -31,4 +31,8 @@ public class QuestionService {
             return Optional.empty();
         }
     }
+
+    public void deleteQuestion(int questionId) {
+        questionRepository.deleteById(questionId);
+    }
 }
