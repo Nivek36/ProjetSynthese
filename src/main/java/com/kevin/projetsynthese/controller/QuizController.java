@@ -52,6 +52,13 @@ public class QuizController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @PutMapping("/unpublish-quiz/{idQuiz}")
+    public ResponseEntity<Quiz> unpublishQuiz(@PathVariable int idQuiz){
+        return quizService.unpublishQuiz(idQuiz)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @PutMapping("/block-quiz/{idQuiz}")
     public ResponseEntity<Quiz> blockQuiz(@PathVariable int idQuiz){
         return quizService.blockQuiz(idQuiz)

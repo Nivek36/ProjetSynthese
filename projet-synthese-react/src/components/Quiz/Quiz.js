@@ -101,8 +101,7 @@ const Quiz = () => {
                             <div className="card-footer border-secondary justify-content-end d-flex">
                                 <button
                                     className='btn btn-secondary btn-sm mx-2'
-                                    onClick={e => { e.preventDefault();  }}
-                                    disabled={quiz.published ? true : false}>
+                                    onClick={e => { e.preventDefault();  }}>
                                     <i className="fas fa-pen"></i> Modify
                                 </button>
                                 <button

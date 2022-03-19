@@ -58,6 +58,16 @@ public class QuizService {
         }
     }
 
+    public Optional<Quiz> unpublishQuiz(int idQuiz) {
+        try {
+            Optional<Quiz> quiz = quizRepository.findById(idQuiz);
+            quiz.get().setPublished(false);
+            return Optional.of(quizRepository.save(quiz.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Quiz> blockQuiz(int idQuiz) {
         try {
             Optional<Quiz> quiz = quizRepository.findById(idQuiz);

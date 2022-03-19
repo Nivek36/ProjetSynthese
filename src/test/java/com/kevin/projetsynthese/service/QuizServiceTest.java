@@ -29,6 +29,7 @@ public class QuizServiceTest {
     private QuizService quizService;
 
     private Quiz quiz;
+    private Quiz unpublishedQuiz;
     private Player player;
     private Admin admin;
 
@@ -37,6 +38,12 @@ public class QuizServiceTest {
         quiz = Quiz.quizBuilder()
                 .idQuiz(1)
                 .name("Best quiz")
+                .build();
+
+        unpublishedQuiz = Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Best quiz")
+                .isPublished(true)
                 .build();
 
         player = Player.playerBuilder()
@@ -103,6 +110,22 @@ public class QuizServiceTest {
         when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
         when(quizRepository.save(quiz)).thenReturn(null);
         Optional<Quiz> actualQuiz = quizService.publishQuiz(quiz.getIdQuiz());
+        assertThat(actualQuiz).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void unpublishQuizTest() {
+        when(quizRepository.findById(unpublishedQuiz.getIdQuiz())).thenReturn(Optional.of(unpublishedQuiz));
+        when(quizRepository.save(unpublishedQuiz)).thenReturn(unpublishedQuiz);
+        Optional<Quiz> actualQuiz = quizService.unpublishQuiz(unpublishedQuiz.getIdQuiz());
+        assertThat(actualQuiz.get().isPublished()).isFalse();
+    }
+
+    @Test
+    public void unpublishQuizTestFails() {
+        when(quizRepository.findById(unpublishedQuiz.getIdQuiz())).thenReturn(Optional.of(unpublishedQuiz));
+        when(quizRepository.save(unpublishedQuiz)).thenReturn(null);
+        Optional<Quiz> actualQuiz = quizService.unpublishQuiz(unpublishedQuiz.getIdQuiz());
         assertThat(actualQuiz).isEqualTo(Optional.empty());
     }
 

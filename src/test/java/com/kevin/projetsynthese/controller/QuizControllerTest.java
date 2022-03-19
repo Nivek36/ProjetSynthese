@@ -33,6 +33,7 @@ public class QuizControllerTest {
     private QuizService quizService;
 
     private Quiz quiz;
+    private Quiz unpublishedQuiz;
     private Player player;
     private Admin admin;
 
@@ -43,6 +44,13 @@ public class QuizControllerTest {
                 .name("Best quiz")
                 .player(player)
                 .build();
+
+        unpublishedQuiz = Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Best quiz")
+                .isPublished(true)
+                .build();
+
         player = Player.playerBuilder()
                 .id(1)
                 .password("1234")
@@ -119,6 +127,19 @@ public class QuizControllerTest {
         var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(quiz).isEqualTo(actualQuiz);
+    }
+
+    @Test
+    public void unpublishQuizTest() throws Exception {
+        when(quizService.unpublishQuiz(unpublishedQuiz.getIdQuiz())).thenReturn(Optional.of(unpublishedQuiz));
+
+        MvcResult result = mockMvc.perform(put("/quiz/unpublish-quiz/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(unpublishedQuiz))).andReturn();
+
+        var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(unpublishedQuiz).isEqualTo(actualQuiz);
     }
 
     @Test
