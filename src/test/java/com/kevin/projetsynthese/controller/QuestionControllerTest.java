@@ -63,6 +63,19 @@ public class QuestionControllerTest {
     }
 
     @Test
+    public void modifyQuestionTest() throws Exception {
+        when(questionService.modifyQuestion(question)).thenReturn(Optional.of(question));
+
+        MvcResult result = mockMvc.perform(post("/question/modify_question")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(question))).andReturn();
+
+        var actualQuestion = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Question.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(question).isEqualTo(actualQuestion);
+    }
+
+    @Test
     public void getAllQuestionsByQuizIdTest() throws Exception {
         when(questionService.getAllQuestionsByQuizId(quiz.getIdQuiz())).thenReturn(Optional.of(getListOfQuestions()));
 

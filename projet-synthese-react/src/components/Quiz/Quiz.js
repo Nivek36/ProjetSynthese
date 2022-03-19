@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import Footer from '../Footer/Footer';
+import ModifyQuestion from './ModifyQuestion';
 
 const Quiz = () => {
     const navigate = useNavigate();
@@ -9,6 +10,8 @@ const Quiz = () => {
     const quiz = location.state
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [questions, setQuestions] = useState([])
+    const [questionToModify, setQuestionToModify] = useState('')
+    const [modifiedQuestion, setModifiedQuestion] = useState({ question: '', answer: '' })
 
     useEffect(() => {
         const getQuestions = async () => {
@@ -46,6 +49,31 @@ const Quiz = () => {
         return data;
     }
 
+    const modifyQuestion = async (question) => {
+        if (modifiedQuestion.question !== '' && modifiedQuestion.answer !== ''
+            && (modifiedQuestion.question !== question.question || modifiedQuestion.answer !== question.answer)) {
+
+            question.question = modifiedQuestion.question
+            question.answer = modifiedQuestion.answer
+            const result = await fetch('http://localhost:8888/question/modify_question',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify(question)
+                })
+            const data = await result.json()
+
+            setQuestionToModify('')
+            setQuestions(await fetchQuestions(quiz.idQuiz))
+            
+            return data;
+        }
+        alert('Fields are empty or not modified!')
+
+    }
+
     const deleteQuestion = async (questionId) => {
         const result = await fetch(`http://localhost:8888/question/delete-question/${questionId}`,
             {
@@ -55,8 +83,74 @@ const Quiz = () => {
                 },
                 body: JSON.stringify(questionId)
             })
-        
+
         setQuestions(await fetchQuestions(quiz.idQuiz))
+    }
+
+    const displayFormForQuestionModification = (question) => {
+        return (
+            <div key={question.idQuestion} className="card border-secondary mt-5 mx-5 shadow">
+                <div className="card-body">
+                    <form className='mx-3'>
+                        <div className="mb-3">
+                            <label htmlFor="modifiedQuestion" className="form-label">Question: </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="modifiedQuestion"
+                                defaultValue={question.question}
+                                onChange={(e) => setModifiedQuestion({ ...modifiedQuestion, question: e.target.value })} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="modifiedAnswer" className="form-label">Answer: </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="modifiedAnswer"
+                                defaultValue={question.answer}
+                                onChange={(e) => setModifiedQuestion({ ...modifiedQuestion, answer: e.target.value })} />
+                        </div>
+                        <button
+                            className='btn btn-success btn-sm me-2'
+                            onClick={e => { e.preventDefault(); modifyQuestion(question) }}>
+                            Modify
+                        </button>
+                        <button
+                            className='btn btn-danger btn-sm me-2'
+                            onClick={e => { e.preventDefault(); setQuestionToModify('') }}>
+                            Cancel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        )
+    }
+
+    const displayQuestion = (question) => {
+        return (
+            <div key={question.idQuestion} className="card border-secondary mt-5 mx-5 shadow">
+                <div className="card-body">
+                    <h5 className="card-title">{question.question}</h5>
+                    <p className="card-text">{question.answer}</p>
+                </div>
+                <div className="card-footer border-secondary justify-content-end d-flex">
+                    <button
+                        className='btn btn-secondary btn-sm mx-2'
+                        onClick={e => {
+                            e.preventDefault();
+                            setModifiedQuestion({ question: question.question, answer: question.answer });
+                            setQuestionToModify('' + question.idQuestion)
+                        }}>
+                        <i className="fas fa-pen"></i> Modify
+                    </button>
+                    <button
+                        className='btn btn-danger btn-sm mx-2'
+                        onClick={e => { e.preventDefault(); deleteQuestion(question.idQuestion) }}>
+                        <i className="fas fa-xmark"></i> Delete
+                    </button>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -70,8 +164,8 @@ const Quiz = () => {
                 </button>
             </div>
             <div className='mx-5'>
-                <div class="card border-secondary bg-light shadow">
-                    <div class="card-body">
+                <div className="card border-secondary bg-light shadow">
+                    <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)} className='mx-3'>
                             <div className="mb-3">
                                 <label htmlFor="question" className="form-label">Question: </label>
@@ -93,24 +187,9 @@ const Quiz = () => {
             <div>
                 {questions
                     .map((question) => (
-                        <div key={question.idQuestion} className="card border-secondary mt-5 mx-5 shadow">
-                            <div className="card-body">
-                                <h5 className="card-title">{question.question}</h5>
-                                <p className="card-text">{question.answer}</p>
-                            </div>
-                            <div className="card-footer border-secondary justify-content-end d-flex">
-                                <button
-                                    className='btn btn-secondary btn-sm mx-2'
-                                    onClick={e => { e.preventDefault();  }}>
-                                    <i className="fas fa-pen"></i> Modify
-                                </button>
-                                <button
-                                    className='btn btn-danger btn-sm mx-2'
-                                    onClick={e => { e.preventDefault(); deleteQuestion(question.idQuestion) }}>
-                                    <i className="fas fa-xmark"></i> Delete
-                                </button>
-                            </div>
-                        </div>
+                        questionToModify === '' + question.idQuestion ?
+                            displayFormForQuestionModification(question)
+                            : displayQuestion(question)
                     ))}
             </div>
             <Footer />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
-const AddNewQuiz = ({onAddQuiz}) => {
+const AddNewQuiz = ({ onAddQuiz }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = (quiz) => {
@@ -17,7 +17,7 @@ const AddNewQuiz = ({onAddQuiz}) => {
     return (
         <div>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i className="fas fa-plus"></i> New quiz
+                <i className="fas fa-plus"></i> New quiz
             </button>
 
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

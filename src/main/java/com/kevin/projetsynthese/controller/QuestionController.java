@@ -25,6 +25,13 @@ public class QuestionController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @PostMapping("/modify_question")
+    public ResponseEntity<Question> modifyQuestion(@RequestBody Question question) {
+        return questionService.modifyQuestion(question)
+                .map(question1 -> ResponseEntity.status(HttpStatus.CREATED).body(question1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @GetMapping("/get-all-questions-by-quiz/{quizId}")
     public ResponseEntity<List<Question>> getAllQuizzesByPlayerId(@PathVariable int quizId){
         return questionService.getAllQuestionsByQuizId(quizId)

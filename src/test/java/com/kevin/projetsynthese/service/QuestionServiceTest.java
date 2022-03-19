@@ -51,6 +51,13 @@ public class QuestionServiceTest {
     }
 
     @Test
+    public void modifyQuestionTest() {
+        when(questionRepository.save(question)).thenReturn(question);
+        Optional<Question> actualQuestion = questionService.modifyQuestion(question);
+        assertThat(actualQuestion.get()).isEqualTo(question);
+    }
+
+    @Test
     public void getAllQuestionsByQuizIdTest(){
         when(questionRepository.findQuestionsByQuizIdQuiz(quiz.getIdQuiz())).thenReturn(getListOfQuestions());
         final Optional<List<Question>> allQuestions = questionService.getAllQuestionsByQuizId(quiz.getIdQuiz());

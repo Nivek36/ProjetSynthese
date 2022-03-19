@@ -32,6 +32,14 @@ public class QuestionService {
         }
     }
 
+    public Optional<Question> modifyQuestion(Question question) {
+        try {
+            return Optional.of(questionRepository.save(question));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public void deleteQuestion(int questionId) {
         questionRepository.deleteById(questionId);
     }
