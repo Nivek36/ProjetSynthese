@@ -70,6 +70,26 @@ const AdminQuizzes = () => {
         alert("Quiz is empty!")
     }
 
+    const blockQuiz = async (quiz) => {
+        const res = await fetch(`http://localhost:8888/quiz/block-quiz/${quiz.idQuiz}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(quiz)
+            })
+        const data = await res.json()
+
+        setQuizzes(
+            quizzes.map(
+                (quiz1) => quiz1.idQuiz === quiz.idQuiz ? { ...quiz1, blocked: data.blocked } : quiz1
+            )
+        )
+
+        return data
+    }
+
     return (
         <div>
             <AdminNavbar />
@@ -97,6 +117,12 @@ const AdminQuizzes = () => {
                                     onClick={e => { e.preventDefault(); publishQuiz(quiz) }}
                                     disabled={quiz.published ? true : false}>
                                     {quiz.published ? 'Published' : 'Publish'}
+                                </button>
+                                <button
+                                    className={'btn btn-danger btn-sm mx-2'}
+                                    onClick={e => { e.preventDefault(); blockQuiz(quiz) }}
+                                    disabled={quiz.blocked ? true : false}>
+                                    {quiz.blocked ? 'Blocked' : 'Block'}
                                 </button>
                             </div>
                         </div>

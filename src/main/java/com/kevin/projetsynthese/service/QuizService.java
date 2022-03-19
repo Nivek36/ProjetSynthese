@@ -40,9 +40,9 @@ public class QuizService {
         }
     }
 
-    public Optional<List<Quiz>> getAllPublishedQuizzes() {
+    public Optional<List<Quiz>> getAllPublishedAndNotBlockedQuizzes() {
         try {
-            return Optional.of(quizRepository.findQuizzesByIsPublishedTrue());
+            return Optional.of(quizRepository.findQuizzesByIsPublishedTrueAndIsBlockedFalse());
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -52,6 +52,16 @@ public class QuizService {
         try {
             Optional<Quiz> quiz = quizRepository.findById(idQuiz);
             quiz.get().setPublished(true);
+            return Optional.of(quizRepository.save(quiz.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Quiz> blockQuiz(int idQuiz) {
+        try {
+            Optional<Quiz> quiz = quizRepository.findById(idQuiz);
+            quiz.get().setBlocked(true);
             return Optional.of(quizRepository.save(quiz.get()));
         } catch (Exception e) {
             return Optional.empty();

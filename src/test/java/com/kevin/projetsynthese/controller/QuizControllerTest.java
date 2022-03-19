@@ -96,8 +96,8 @@ public class QuizControllerTest {
     }
 
     @Test
-    public void getAllPublishedQuizzesTest() throws Exception {
-        when(quizService.getAllPublishedQuizzes()).thenReturn(Optional.of(getListOfPublishedQuizzes()));
+    public void getAllPublishedAndNotBlockedQuizzesTest() throws Exception {
+        when(quizService.getAllPublishedAndNotBlockedQuizzes()).thenReturn(Optional.of(getListOfPublishedQuizzes()));
 
         MvcResult result = mockMvc.perform(get("/quiz/get-all-published-quizzes")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -113,6 +113,19 @@ public class QuizControllerTest {
         when(quizService.publishQuiz(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
 
         MvcResult result = mockMvc.perform(put("/quiz/publish-quiz/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(quiz))).andReturn();
+
+        var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(quiz).isEqualTo(actualQuiz);
+    }
+
+    @Test
+    public void blockQuizTest() throws Exception {
+        when(quizService.blockQuiz(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+
+        MvcResult result = mockMvc.perform(put("/quiz/block-quiz/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(quiz))).andReturn();
 

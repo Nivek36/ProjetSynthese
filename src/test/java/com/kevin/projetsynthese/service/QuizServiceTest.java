@@ -83,9 +83,9 @@ public class QuizServiceTest {
     }
 
     @Test
-    public void getAllPublishedQuizzesTest(){
-        when(quizRepository.findQuizzesByIsPublishedTrue()).thenReturn(getListOfPublishedQuizzes());
-        final Optional<List<Quiz>> allQuizzes = quizService.getAllPublishedQuizzes();
+    public void getAllPublishedAndNotBlockedQuizzesTest(){
+        when(quizRepository.findQuizzesByIsPublishedTrueAndIsBlockedFalse()).thenReturn(getListOfPublishedQuizzes());
+        final Optional<List<Quiz>> allQuizzes = quizService.getAllPublishedAndNotBlockedQuizzes();
         assertThat(allQuizzes.get().size()).isEqualTo(3);
         assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
     }
@@ -103,6 +103,22 @@ public class QuizServiceTest {
         when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
         when(quizRepository.save(quiz)).thenReturn(null);
         Optional<Quiz> actualQuiz = quizService.publishQuiz(quiz.getIdQuiz());
+        assertThat(actualQuiz).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void blockQuizTest() {
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        when(quizRepository.save(quiz)).thenReturn(quiz);
+        Optional<Quiz> actualQuiz = quizService.blockQuiz(quiz.getIdQuiz());
+        assertThat(actualQuiz.get().isBlocked()).isTrue();
+    }
+
+    @Test
+    public void blockQuizTestFails() {
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        when(quizRepository.save(quiz)).thenReturn(null);
+        Optional<Quiz> actualQuiz = quizService.blockQuiz(quiz.getIdQuiz());
         assertThat(actualQuiz).isEqualTo(Optional.empty());
     }
 

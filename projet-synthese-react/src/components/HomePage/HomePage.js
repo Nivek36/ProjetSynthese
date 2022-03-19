@@ -16,7 +16,7 @@ const HomePage = () => {
     }, [])
 
     const fetchPublishedQuizzes = async () => {
-        const res = await fetch('http://localhost:8888/quiz/get-all-published-quizzes')
+        const res = await fetch('http://localhost:8888/quiz/get-all-published-and-not-blocked-quizzes')
         return await res.json()
     }
 

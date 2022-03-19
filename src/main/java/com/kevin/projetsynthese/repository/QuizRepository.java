@@ -11,6 +11,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 
     List<Quiz> findQuizzesByPlayerId(int id);
     List<Quiz> findQuizzesByAdmin_Id(int id);
-    List<Quiz> findQuizzesByIsPublishedTrue();
+    List<Quiz> findQuizzesByIsPublishedTrueAndIsBlockedFalse();
 }
 

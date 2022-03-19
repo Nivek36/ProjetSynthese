@@ -38,9 +38,9 @@ public class QuizController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
-    @GetMapping("/get-all-published-quizzes")
-    public ResponseEntity<List<Quiz>> getAllPublishedQuizzes(){
-        return quizService.getAllPublishedQuizzes()
+    @GetMapping("/get-all-published-and-not-blocked-quizzes")
+    public ResponseEntity<List<Quiz>> getAllPublishedAndNotBlockedQuizzes(){
+        return quizService.getAllPublishedAndNotBlockedQuizzes()
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
@@ -48,6 +48,13 @@ public class QuizController {
     @PutMapping("/publish-quiz/{idQuiz}")
     public ResponseEntity<Quiz> publishQuiz(@PathVariable int idQuiz){
         return quizService.publishQuiz(idQuiz)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/block-quiz/{idQuiz}")
+    public ResponseEntity<Quiz> blockQuiz(@PathVariable int idQuiz){
+        return quizService.blockQuiz(idQuiz)
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
