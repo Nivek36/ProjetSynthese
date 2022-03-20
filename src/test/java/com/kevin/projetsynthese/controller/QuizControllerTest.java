@@ -78,6 +78,19 @@ public class QuizControllerTest {
     }
 
     @Test
+    public void getQuizByIdTest() throws Exception {
+        when(quizService.getQuizById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+
+        MvcResult result = mockMvc.perform(get("/quiz/get-quiz/{quizId}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals).isEqualTo(quiz);
+    }
+
+    @Test
     public void getAllQuizzesByPlayerIdTest() throws Exception {
         when(quizService.getAllQuizzesByPlayerId(player.getId())).thenReturn(Optional.of(getListOfQuizzesByPlayer()));
 
@@ -152,6 +165,19 @@ public class QuizControllerTest {
 
         var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(quiz).isEqualTo(actualQuiz);
+    }
+
+    @Test
+    public void modifyQuizNameAndDescriptionTest() throws Exception {
+        when(quizService.modifyQuizNameAndDescription(quiz)).thenReturn(Optional.of(quiz));
+
+        MvcResult result = mockMvc.perform(post("/quiz/modify_quiz_name_and_description")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(quiz))).andReturn();
+
+        var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(quiz).isEqualTo(actualQuiz);
     }
 

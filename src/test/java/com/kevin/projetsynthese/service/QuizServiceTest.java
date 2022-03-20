@@ -74,6 +74,13 @@ public class QuizServiceTest {
     }
 
     @Test
+    public void getQuizByIdTest(){
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        final Optional<Quiz> actualQuiz = quizService.getQuizById(quiz.getIdQuiz());
+        assertThat(actualQuiz.get()).isEqualTo(quiz);
+    }
+
+    @Test
     public void getAllQuizzesByPlayerIdTest(){
         when(quizRepository.findQuizzesByPlayerId(player.getId())).thenReturn(getListOfQuizzesByPlayer());
         final Optional<List<Quiz>> allQuizzes = quizService.getAllQuizzesByPlayerId(player.getId());
@@ -143,6 +150,20 @@ public class QuizServiceTest {
         when(quizRepository.save(quiz)).thenReturn(null);
         Optional<Quiz> actualQuiz = quizService.blockQuiz(quiz.getIdQuiz());
         assertThat(actualQuiz).isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void modifyQuizNameAndDescriptionTest() {
+        when(quizRepository.save(quiz)).thenReturn(quiz);
+        Optional<Quiz> actualQuiz = quizService.modifyQuizNameAndDescription(quiz);
+        assertThat(actualQuiz.get()).isEqualTo(quiz);
+    }
+
+    @Test
+    public void modifyQuizNameAndDescriptionFailsTest() {
+        when(quizRepository.save(any())).thenReturn(quiz).thenReturn(Optional.empty());
+        quizService.modifyQuizNameAndDescription(quiz);
+        assertThat(quizService.modifyQuizNameAndDescription(quiz)).isEmpty();
     }
 
     private List<Quiz> getListOfQuizzesByPlayer() {

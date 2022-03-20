@@ -24,6 +24,14 @@ public class QuizService {
         }
     }
 
+    public Optional<Quiz> getQuizById(int quizId) {
+        try {
+            return quizRepository.findById(quizId);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<List<Quiz>> getAllQuizzesByPlayerId(int id) {
         try {
             return Optional.of(quizRepository.findQuizzesByPlayerId(id));
@@ -73,6 +81,14 @@ public class QuizService {
             Optional<Quiz> quiz = quizRepository.findById(idQuiz);
             quiz.get().setBlocked(true);
             return Optional.of(quizRepository.save(quiz.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Quiz> modifyQuizNameAndDescription(Quiz quiz) {
+        try {
+            return Optional.of(quizRepository.save(quiz));
         } catch (Exception e) {
             return Optional.empty();
         }

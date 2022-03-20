@@ -24,6 +24,13 @@ public class QuizController {
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 
+    @GetMapping("/get-quiz/{quizId}")
+    public ResponseEntity<Quiz> getQuiz(@PathVariable int quizId){
+        return quizService.getQuizById(quizId)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
     @GetMapping("/get-all-quizzes-by-player/{playerId}")
     public ResponseEntity<List<Quiz>> getAllQuizzesByPlayerId(@PathVariable int playerId){
         return quizService.getAllQuizzesByPlayerId(playerId)
@@ -63,6 +70,13 @@ public class QuizController {
     public ResponseEntity<Quiz> blockQuiz(@PathVariable int idQuiz){
         return quizService.blockQuiz(idQuiz)
                 .map(quiz1 -> ResponseEntity.status(HttpStatus.OK).body(quiz1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/modify_quiz_name_and_description")
+    public ResponseEntity<Quiz> modifyQuizNameAndDescription(@RequestBody Quiz quiz) {
+        return quizService.modifyQuizNameAndDescription(quiz)
+                .map(quiz1 -> ResponseEntity.status(HttpStatus.CREATED).body(quiz1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }
