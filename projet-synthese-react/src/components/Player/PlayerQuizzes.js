@@ -70,6 +70,35 @@ const PlayerQuizzes = () => {
         alert("Quiz is empty!")
     }
 
+    const unpublishQuiz = async (quiz) => {
+        const res = await fetch(`http://localhost:8888/quiz/unpublish-quiz/${quiz.idQuiz}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(quiz)
+            })
+        const data = await res.json()
+
+        setQuizzes(
+            quizzes.map(
+                (quiz1) => quiz1.idQuiz === quiz.idQuiz ? { ...quiz1, published: data.published } : quiz1
+            )
+        )
+
+        return data
+    }
+
+    const modifyQuiz = async (quiz) => {
+        if (quiz.published) {
+            unpublishQuiz(quiz)
+            alert("This quiz is no longer published")
+        }
+        navigate('/quiz', { state: quiz })
+    }
+
+
     return (
         <div>
             <PlayerNavbar />
@@ -86,11 +115,10 @@ const PlayerQuizzes = () => {
                                 <p className="card-text">{quiz.description}</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
-                                <button
+                            <button
                                     className='btn btn-secondary btn-sm mx-2'
-                                    onClick={e => { e.preventDefault(); navigate('/quiz', { state: quiz }) }}
-                                    disabled={quiz.published ? true : false}>
-                                    <i className="fas fa-plus"></i> Add questions
+                                    onClick={e => { e.preventDefault(); modifyQuiz(quiz) }}>
+                                    <i className="fas fa-pen"></i> Modify
                                 </button>
                                 <button
                                     className={`btn ${quiz.published ? 'btn-success' : 'btn-warning'}  btn-sm mx-2`}
