@@ -91,6 +91,19 @@ public class QuizControllerTest {
     }
 
     @Test
+    public void getAllQuizzesTest() throws Exception {
+        when(quizService.getAllQuizzes()).thenReturn(Optional.of(getListOfQuizzes()));
+
+        MvcResult result = mockMvc.perform(get("/quiz/get-all-quizzes")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
     public void getAllQuizzesByPlayerIdTest() throws Exception {
         when(quizService.getAllQuizzesByPlayerId(player.getId())).thenReturn(Optional.of(getListOfQuizzesByPlayer()));
 
@@ -179,6 +192,26 @@ public class QuizControllerTest {
         var actualQuiz = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Quiz.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(quiz).isEqualTo(actualQuiz);
+    }
+
+    private List<Quiz> getListOfQuizzes() {
+        List<Quiz> quizList = new ArrayList<>();
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Quiz1")
+                .player(player)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(2)
+                .name("Quiz2")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(3)
+                .name("Quiz3")
+                .player(player)
+                .build());
+        return quizList;
     }
 
     private List<Quiz> getListOfQuizzesByPlayer() {

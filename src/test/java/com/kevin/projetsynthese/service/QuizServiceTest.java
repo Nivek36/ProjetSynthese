@@ -81,6 +81,14 @@ public class QuizServiceTest {
     }
 
     @Test
+    public void getAllQuizzesTest(){
+        when(quizRepository.findAll()).thenReturn(getListOfQuizzes());
+        final Optional<List<Quiz>> allQuizzes = quizService.getAllQuizzes();
+        assertThat(allQuizzes.get().size()).isEqualTo(3);
+        assertThat(allQuizzes.get().get(0).getIdQuiz()).isEqualTo(1);
+    }
+
+    @Test
     public void getAllQuizzesByPlayerIdTest(){
         when(quizRepository.findQuizzesByPlayerId(player.getId())).thenReturn(getListOfQuizzesByPlayer());
         final Optional<List<Quiz>> allQuizzes = quizService.getAllQuizzesByPlayerId(player.getId());
@@ -164,6 +172,26 @@ public class QuizServiceTest {
         when(quizRepository.save(any())).thenReturn(quiz).thenReturn(Optional.empty());
         quizService.modifyQuizNameAndDescription(quiz);
         assertThat(quizService.modifyQuizNameAndDescription(quiz)).isEmpty();
+    }
+
+    private List<Quiz> getListOfQuizzes() {
+        List<Quiz> quizList = new ArrayList<>();
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Quiz1")
+                .player(player)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(2)
+                .name("Quiz2")
+                .admin(admin)
+                .build());
+        quizList.add(Quiz.quizBuilder()
+                .idQuiz(3)
+                .name("Quiz3")
+                .player(player)
+                .build());
+        return quizList;
     }
 
     private List<Quiz> getListOfQuizzesByPlayer() {

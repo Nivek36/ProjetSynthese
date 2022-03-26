@@ -32,6 +32,14 @@ public class QuizService {
         }
     }
 
+    public Optional<List<Quiz>> getAllQuizzes() {
+        try {
+            return Optional.of(quizRepository.findAll());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<List<Quiz>> getAllQuizzesByPlayerId(int id) {
         try {
             return Optional.of(quizRepository.findQuizzesByPlayerId(id));
