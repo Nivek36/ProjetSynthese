@@ -2,6 +2,7 @@ package com.kevin.projetsynthese.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kevin.projetsynthese.model.Player;
+import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.service.PlayerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,6 +80,32 @@ public class PlayerControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void blockPlayerTest() throws Exception {
+        when(playerService.blockPlayer(player.getId())).thenReturn(Optional.of(player));
+
+        MvcResult result = mockMvc.perform(put("/player/block-player/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(player))).andReturn();
+
+        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Player.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(player).isEqualTo(actual);
+    }
+
+    @Test
+    public void unblockPlayerTest() throws Exception {
+        when(playerService.unblockPlayer(player.getId())).thenReturn(Optional.of(player));
+
+        MvcResult result = mockMvc.perform(put("/player/unblock-player/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(player))).andReturn();
+
+        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Player.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(player).isEqualTo(actual);
     }
 
     private List<Player> getListOfPlayers() {

@@ -29,6 +29,7 @@ public class PlayerServiceTest {
     private PlayerService playerService;
 
     private Player player;
+    private Player player2;
 
     @BeforeEach
     void setup() {
@@ -36,6 +37,13 @@ public class PlayerServiceTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .isBlocked(false)
+                .build();
+        player2 = Player.playerBuilder()
+                .id(2)
+                .password("1234")
+                .username("Toto2")
+                .isBlocked(true)
                 .build();
     }
 
@@ -66,6 +74,22 @@ public class PlayerServiceTest {
         final Optional<List<Player>> allPlayers = playerService.getAllPlayers();
         assertThat(allPlayers.get().size()).isEqualTo(3);
         assertThat(allPlayers.get().get(0).getId()).isEqualTo(1);
+    }
+
+    @Test
+    public void blockPlayerTest() {
+        when(playerRepository.findById(player.getId())).thenReturn(Optional.of(player));
+        when(playerRepository.save(player)).thenReturn(player);
+        Optional<Player> actualPlayer = playerService.blockPlayer(player.getId());
+        assertThat(actualPlayer.get().isBlocked()).isTrue();
+    }
+
+    @Test
+    public void unblockPlayerTest() {
+        when(playerRepository.findById(player2.getId())).thenReturn(Optional.of(player2));
+        when(playerRepository.save(player2)).thenReturn(player2);
+        Optional<Player> actualPlayer = playerService.unblockPlayer(player2.getId());
+        assertThat(actualPlayer.get().isBlocked()).isFalse();
     }
 
     private List<Player> getListOfPlayers() {

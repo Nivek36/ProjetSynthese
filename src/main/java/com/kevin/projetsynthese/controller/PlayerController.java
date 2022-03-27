@@ -38,4 +38,18 @@ public class PlayerController {
                 .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @PutMapping("/block-player/{id}")
+    public ResponseEntity<Player> blockPlayer(@PathVariable int id){
+        return playerService.blockPlayer(id)
+                .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/unblock-player/{id}")
+    public ResponseEntity<Player> unblockPlayer(@PathVariable int id){
+        return playerService.unblockPlayer(id)
+                .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

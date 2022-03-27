@@ -40,4 +40,24 @@ public class PlayerService {
             return Optional.empty();
         }
     }
+
+    public Optional<Player> blockPlayer(int id) {
+        try {
+            Optional<Player> player = playerRepository.findById(id);
+            player.get().setBlocked(true);
+            return Optional.of(playerRepository.save(player.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Player> unblockPlayer(int id) {
+        try {
+            Optional<Player> player = playerRepository.findById(id);
+            player.get().setBlocked(false);
+            return Optional.of(playerRepository.save(player.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }

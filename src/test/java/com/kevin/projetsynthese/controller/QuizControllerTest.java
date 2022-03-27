@@ -133,7 +133,7 @@ public class QuizControllerTest {
     public void getAllPublishedAndNotBlockedQuizzesTest() throws Exception {
         when(quizService.getAllPublishedAndNotBlockedQuizzes()).thenReturn(Optional.of(getListOfPublishedQuizzes()));
 
-        MvcResult result = mockMvc.perform(get("/quiz/get-all-published-quizzes")
+        MvcResult result = mockMvc.perform(get("/quiz/get-all-published-and-not-blocked-quizzes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
