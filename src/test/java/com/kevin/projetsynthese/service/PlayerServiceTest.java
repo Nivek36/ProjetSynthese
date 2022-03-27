@@ -1,6 +1,7 @@
 package com.kevin.projetsynthese.service;
 
 import com.kevin.projetsynthese.model.Player;
+import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.repository.PlayerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,5 +58,33 @@ public class PlayerServiceTest {
         when(playerRepository.findPlayerByUsernameAndPassword(player.getUsername(), player.getPassword())).thenReturn(player);
         Optional<Player> actualAdmin = playerService.loginPlayer(player.getUsername(), player.getPassword());
         assertThat(actualAdmin.get()).isEqualTo(player);
+    }
+
+    @Test
+    public void getAllPlayersTest(){
+        when(playerRepository.findAll()).thenReturn(getListOfPlayers());
+        final Optional<List<Player>> allPlayers = playerService.getAllPlayers();
+        assertThat(allPlayers.get().size()).isEqualTo(3);
+        assertThat(allPlayers.get().get(0).getId()).isEqualTo(1);
+    }
+
+    private List<Player> getListOfPlayers() {
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(Player.playerBuilder()
+                .id(1)
+                .username("Player1")
+                .password("1234")
+                .build());
+        playerList.add(Player.playerBuilder()
+                .id(2)
+                .username("Player2")
+                .password("1234")
+                .build());
+        playerList.add(Player.playerBuilder()
+                .id(3)
+                .username("Player3")
+                .password("1234")
+                .build());
+        return playerList;
     }
 }

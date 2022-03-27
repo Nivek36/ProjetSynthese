@@ -26,6 +26,7 @@ const AdminNavbar = () => {
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                 <li><Link className="dropdown-item" to="/admin-quizzes">Manage quizzes</Link></li>
+                                <li><Link className="dropdown-item" to="/admin-players-list">Manage players</Link></li>
                                 <li>
                                     <button
                                         className="dropdown-item text-danger"
