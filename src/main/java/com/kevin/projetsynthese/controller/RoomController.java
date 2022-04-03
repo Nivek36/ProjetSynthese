@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/room")
@@ -20,6 +22,13 @@ public class RoomController {
     public ResponseEntity<Room> createNewRoom(@RequestBody Room room) {
         return roomService.createNewRoom(room)
                 .map(room1 -> ResponseEntity.status(HttpStatus.CREATED).body(room1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @GetMapping("/get-all-rooms")
+    public ResponseEntity<List<Room>> getAllRooms(){
+        return roomService.getAllRooms()
+                .map(rooms -> ResponseEntity.status(HttpStatus.OK).body(rooms))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }
