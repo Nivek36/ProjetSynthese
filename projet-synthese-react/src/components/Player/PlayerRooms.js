@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import AddNewRoom from './AddNewRoom'
+import AddNewRoom from '../Room/AddNewRoom'
 import PlayerNavbar from './PlayerNavbar'
+import { useNavigate } from 'react-router-dom'
 
 const PlayerRooms = () => {
     const [rooms, setRooms] = useState([])
+    const [roomToVerify, setRoomToVerify] = useState('')
+    const [roomPasswordTry, setRoomPasswordTry] = useState({ password: '' })
     const player = JSON.parse(sessionStorage.getItem("user"))
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getRooms = async () => {
@@ -34,6 +38,48 @@ const PlayerRooms = () => {
         return data;
     }
 
+    const displayFormToCheckPassword = (room) => {
+        return (
+            <div className="">
+                <form className='mx-3'>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Enter password: </label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            defaultValue={''}
+                            onChange={(e) => setRoomPasswordTry({ ...roomPasswordTry, password: e.target.value })} />
+                    </div>
+                    <div className='d-flex'>
+                        <button
+                            className='btn btn-success btn-sm me-2'
+                            onClick={e => { e.preventDefault(); verifyPassword(room) }}>
+                            Join
+                        </button>
+                        <button
+                            className='btn btn-danger btn-sm me-2'
+                            onClick={e => { e.preventDefault(); setRoomToVerify('') }}>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+
+    const verifyPassword = (room) => {
+        console.log(room.password)
+        console.log('Password to try: ' + roomPasswordTry.password)
+        if (roomPasswordTry.password === room.password) {
+            setRoomToVerify('')
+            setRoomPasswordTry({ ...roomPasswordTry, password: '' })
+            navigate('/room-to-play', { state: room })
+        } else {
+            alert("Wrong password")
+        }
+    }
+
     return (
         <div>
             <PlayerNavbar />
@@ -52,11 +98,11 @@ const PlayerRooms = () => {
                                     <h5 className="card-title text-center">{room.name}</h5>
                                     <p className="card-text text-center">By: {room.owner.username}</p>
                                     <div className='d-flex justify-content-center'>
-                                        {/* {<button
+                                        {roomToVerify === '' + room.idRoom ? displayFormToCheckPassword(room) : <button
                                             className='btn btn-primary'
-                                            onClick={e => { e.preventDefault(); navigate('/play-quiz', { state: quiz }) }}>
-                                            Play !
-                                        </button>} */}
+                                            onClick={e => { e.preventDefault(); setRoomToVerify('' + room.idRoom) }}>
+                                            Join !
+                                        </button>}
                                     </div>
                                 </div>
                             </div>
