@@ -20,9 +20,12 @@ const PlayerNavbar = () => {
                         <span className="fas fa-bars"></span>
                     </button>
                     <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
-                        <Link className='btn btn-primary mx-2' to="/HomePage">Home Page</Link>
+                        <div>
+                            <Link className='btn btn-primary btn-sm mx-2' to="/HomePage">Home Page</Link>
+                            <Link className='btn btn-primary btn-sm mx-2' to="/player-rooms">Rooms</Link>
+                        </div>
                         <div className="dropdown">
-                            <button className="btn btn-primary rounded-pill dropdown-toggle mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-primary btn-sm rounded-pill dropdown-toggle mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 {player.username + " "}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">

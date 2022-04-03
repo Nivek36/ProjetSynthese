@@ -10,6 +10,7 @@ import AdminHomePage from './components/Admin/AdminHomePage';
 import AdminQuizzes from './components/Admin/AdminQuizzes';
 import PlayQuiz from './components/Quiz/PlayQuiz';
 import AdminPlayerList from './components/Admin/AdminPlayerList';
+import PlayerRooms from './components/Player/PlayerRooms';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/admin-quizzes" element={<AdminQuizzes />} />
         <Route path="/play-quiz" element={<PlayQuiz />} />
         <Route path="/admin-players-list" element={<AdminPlayerList />} />
+        <Route path="/player-rooms" element={<PlayerRooms />} />
       </Routes>
     </Router>
   );
