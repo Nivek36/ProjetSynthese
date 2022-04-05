@@ -3,6 +3,7 @@ package com.kevin.projetsynthese.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
+import com.kevin.projetsynthese.model.Room;
 import com.kevin.projetsynthese.service.PlayerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ public class PlayerControllerTest {
     private PlayerService playerService;
 
     private Player player;
+    private Room room;
 
     @BeforeEach
     void setup() {
@@ -40,6 +42,12 @@ public class PlayerControllerTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .build();
+        room = Room.roomBuilder()
+                .idRoom(1)
+                .name("room1")
+                .password("1234")
+                .owner(player)
                 .build();
     }
 
@@ -100,6 +108,19 @@ public class PlayerControllerTest {
         when(playerService.unblockPlayer(player.getId())).thenReturn(Optional.of(player));
 
         MvcResult result = mockMvc.perform(put("/player/unblock-player/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(player))).andReturn();
+
+        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Player.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(player).isEqualTo(actual);
+    }
+
+    @Test
+    public void joinedRoomByPlayerTest() throws Exception {
+        when(playerService.joinedRoomByPlayer(room.getIdRoom(), player.getId())).thenReturn(Optional.of(player));
+
+        MvcResult result = mockMvc.perform(put("/player/joined-room-by-player/{roomId}/{playerId}", room.getIdRoom(), player.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(player))).andReturn();
 

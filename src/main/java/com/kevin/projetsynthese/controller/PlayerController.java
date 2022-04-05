@@ -2,6 +2,7 @@ package com.kevin.projetsynthese.controller;
 
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
+import com.kevin.projetsynthese.model.Room;
 import com.kevin.projetsynthese.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,13 @@ public class PlayerController {
     @PutMapping("/unblock-player/{id}")
     public ResponseEntity<Player> unblockPlayer(@PathVariable int id){
         return playerService.unblockPlayer(id)
+                .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PutMapping("/joined-room-by-player/{roomId}/{playerId}")
+    public ResponseEntity<Player> joinedRoomByPlayer(@PathVariable int roomId,  @PathVariable int playerId){
+        return playerService.joinedRoomByPlayer(roomId, playerId)
                 .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }

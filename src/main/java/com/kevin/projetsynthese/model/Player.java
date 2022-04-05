@@ -13,18 +13,18 @@ import javax.persistence.OneToOne;
 public class Player extends User{
 
     private boolean isBlocked;
-    private boolean hasJoinedARoom;
+    private boolean isJoinedARoom;
 
     @OneToOne
     private Room joinedRoom;
 
     @Builder(builderMethodName = "playerBuilder")
-    public Player(int id, String password, String username, boolean isBlocked, boolean hasJoinedARoom, Room joinedRoom) {
+    public Player(int id, String password, String username, boolean isBlocked, boolean isJoinedARoom, Room joinedRoom) {
         super.setId(id);
         super.setPassword(password);
         super.setUsername(username);
         this.isBlocked = isBlocked;
-        this.hasJoinedARoom = hasJoinedARoom;
+        this.isJoinedARoom = isJoinedARoom;
         this.joinedRoom = joinedRoom;
     }
 }

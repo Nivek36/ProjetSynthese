@@ -38,7 +38,26 @@ const PlayerRooms = () => {
         return data;
     }
 
+    const joinedRoomByPlayer = async (room) => {
+        const res = await fetch(`http://localhost:8888/player/joined-room-by-player/${room.idRoom}/${player.id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(player)
+            })
+        const data = await res.json()
+
+        return data
+    }
+
     const displayFormToCheckPassword = (room) => {
+
+        if (player.isJoinedARoom) {
+            alert("You will be disconnected from your other room !")
+        }
+
         return (
             <div className="">
                 <form className='mx-3'>
@@ -68,10 +87,11 @@ const PlayerRooms = () => {
         )
     }
 
-    const verifyPassword = (room) => {
-        console.log(room.password)
-        console.log('Password to try: ' + roomPasswordTry.password)
+    const verifyPassword = async (room) => {
         if (roomPasswordTry.password === room.password) {
+            const res = await joinedRoomByPlayer(room)
+            // sessionStorage.setItem('user', JSON.stringify(res))
+            // player = res
             setRoomToVerify('')
             setRoomPasswordTry({ ...roomPasswordTry, password: '' })
             navigate('/room-to-play', { state: room })

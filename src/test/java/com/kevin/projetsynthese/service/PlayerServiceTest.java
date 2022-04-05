@@ -2,7 +2,9 @@ package com.kevin.projetsynthese.service;
 
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
+import com.kevin.projetsynthese.model.Room;
 import com.kevin.projetsynthese.repository.PlayerRepository;
+import com.kevin.projetsynthese.repository.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,11 +27,15 @@ public class PlayerServiceTest {
     @Mock
     private PlayerRepository playerRepository;
 
+    @Mock
+    private RoomRepository roomRepository;
+
     @InjectMocks
     private PlayerService playerService;
 
     private Player player;
     private Player player2;
+    private Room room;
 
     @BeforeEach
     void setup() {
@@ -44,6 +50,12 @@ public class PlayerServiceTest {
                 .password("1234")
                 .username("Toto2")
                 .isBlocked(true)
+                .build();
+        room = Room.roomBuilder()
+                .idRoom(1)
+                .name("room1")
+                .password("1234")
+                .owner(player)
                 .build();
     }
 
@@ -90,6 +102,16 @@ public class PlayerServiceTest {
         when(playerRepository.save(player2)).thenReturn(player2);
         Optional<Player> actualPlayer = playerService.unblockPlayer(player2.getId());
         assertThat(actualPlayer.get().isBlocked()).isFalse();
+    }
+
+    @Test
+    public void joinedRoomByPlayerTest() {
+        when(playerRepository.findById(player.getId())).thenReturn(Optional.of(player));
+        when(roomRepository.findById(room.getIdRoom())).thenReturn(Optional.of(room));
+        when(playerRepository.save(player)).thenReturn(player);
+        Optional<Player> actualPlayer = playerService.joinedRoomByPlayer(room.getIdRoom(), player.getId());
+        assertThat(actualPlayer.get().getJoinedRoom()).isEqualTo(room);
+        assertThat(actualPlayer.get().isJoinedARoom()).isTrue();
     }
 
     private List<Player> getListOfPlayers() {

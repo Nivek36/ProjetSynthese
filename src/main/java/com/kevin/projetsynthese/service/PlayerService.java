@@ -2,7 +2,9 @@ package com.kevin.projetsynthese.service;
 
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
+import com.kevin.projetsynthese.model.Room;
 import com.kevin.projetsynthese.repository.PlayerRepository;
+import com.kevin.projetsynthese.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class PlayerService {
 
     private PlayerRepository playerRepository;
+    private RoomRepository roomRepository;
 
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, RoomRepository roomRepository) {
         this.playerRepository = playerRepository;
+        this.roomRepository = roomRepository;
     }
 
     public Optional<Player> registerPlayer(Player player) {
@@ -55,6 +59,18 @@ public class PlayerService {
         try {
             Optional<Player> player = playerRepository.findById(id);
             player.get().setBlocked(false);
+            return Optional.of(playerRepository.save(player.get()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Player> joinedRoomByPlayer(int roomId, int playerId) {
+        try {
+            Optional<Player> player = playerRepository.findById(playerId);
+            Optional<Room> room = roomRepository.findById(roomId);
+            player.get().setJoinedRoom(room.get());
+            player.get().setJoinedARoom(true);
             return Optional.of(playerRepository.save(player.get()));
         } catch (Exception e) {
             return Optional.empty();
