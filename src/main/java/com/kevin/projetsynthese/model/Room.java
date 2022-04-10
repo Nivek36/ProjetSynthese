@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,11 +23,15 @@ public class Room {
     @OneToOne
     private Player owner;
 
+    @OneToMany
+    List<Player> roomPlayers;
+
     @Builder(builderMethodName = "roomBuilder")
-    public Room(int idRoom, String name, String password, Player owner) {
+    public Room(int idRoom, String name, String password, Player owner, List<Player> roomPlayers) {
         this.idRoom = idRoom;
         this.name = name;
         this.password = password;
         this.owner = owner;
+        this.roomPlayers = roomPlayers;
     }
 }

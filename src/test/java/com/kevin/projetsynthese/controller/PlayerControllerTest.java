@@ -116,35 +116,25 @@ public class PlayerControllerTest {
         assertThat(player).isEqualTo(actual);
     }
 
-    @Test
-    public void joinedRoomByPlayerTest() throws Exception {
-        when(playerService.joinedRoomByPlayer(room.getIdRoom(), player.getId())).thenReturn(Optional.of(player));
-
-        MvcResult result = mockMvc.perform(put("/player/joined-room-by-player/{roomId}/{playerId}", room.getIdRoom(), player.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(player))).andReturn();
-
-        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Player.class);
-        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(player).isEqualTo(actual);
-    }
-
     private List<Player> getListOfPlayers() {
         List<Player> playerList = new ArrayList<>();
         playerList.add(Player.playerBuilder()
                 .id(1)
                 .username("Player1")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         playerList.add(Player.playerBuilder()
                 .id(2)
                 .username("Player2")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         playerList.add(Player.playerBuilder()
                 .id(3)
                 .username("Player3")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         return playerList;
     }

@@ -64,16 +64,4 @@ public class PlayerService {
             return Optional.empty();
         }
     }
-
-    public Optional<Player> joinedRoomByPlayer(int roomId, int playerId) {
-        try {
-            Optional<Player> player = playerRepository.findById(playerId);
-            Optional<Room> room = roomRepository.findById(roomId);
-            player.get().setJoinedRoom(room.get());
-            player.get().setJoinedARoom(true);
-            return Optional.of(playerRepository.save(player.get()));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
 }

@@ -53,11 +53,4 @@ public class PlayerController {
                 .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
-
-    @PutMapping("/joined-room-by-player/{roomId}/{playerId}")
-    public ResponseEntity<Player> joinedRoomByPlayer(@PathVariable int roomId,  @PathVariable int playerId){
-        return playerService.joinedRoomByPlayer(roomId, playerId)
-                .map(player1 -> ResponseEntity.status(HttpStatus.OK).body(player1))
-                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
-    }
 }

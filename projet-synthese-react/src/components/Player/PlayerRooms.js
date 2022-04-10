@@ -35,17 +35,19 @@ const PlayerRooms = () => {
             })
         const data = await result.json()
 
+        setRooms(await fetchRooms())
+
         return data;
     }
 
     const joinedRoomByPlayer = async (room) => {
-        const res = await fetch(`http://localhost:8888/player/joined-room-by-player/${room.idRoom}/${player.id}`,
+        const res = await fetch(`http://localhost:8888/room/joined-room-by-player/${room.idRoom}/${player.id}`,
             {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(player)
+                body: JSON.stringify(room)
             })
         const data = await res.json()
 
@@ -88,8 +90,13 @@ const PlayerRooms = () => {
     }
 
     const verifyPassword = async (room) => {
+        // console.log(room)
         if (roomPasswordTry.password === room.password) {
-            const res = await joinedRoomByPlayer(room)
+            if (room.roomPlayers.length === 0) {
+                const res = await joinedRoomByPlayer(room)
+            } else if (room.roomPlayers.find((p) => {return player.id === p.id}) === undefined) {
+                const res = await joinedRoomByPlayer(room)
+            }
             // sessionStorage.setItem('user', JSON.stringify(res))
             // player = res
             setRoomToVerify('')

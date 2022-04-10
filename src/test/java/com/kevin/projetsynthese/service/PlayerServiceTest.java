@@ -104,32 +104,25 @@ public class PlayerServiceTest {
         assertThat(actualPlayer.get().isBlocked()).isFalse();
     }
 
-    @Test
-    public void joinedRoomByPlayerTest() {
-        when(playerRepository.findById(player.getId())).thenReturn(Optional.of(player));
-        when(roomRepository.findById(room.getIdRoom())).thenReturn(Optional.of(room));
-        when(playerRepository.save(player)).thenReturn(player);
-        Optional<Player> actualPlayer = playerService.joinedRoomByPlayer(room.getIdRoom(), player.getId());
-        assertThat(actualPlayer.get().getJoinedRoom()).isEqualTo(room);
-        assertThat(actualPlayer.get().isJoinedARoom()).isTrue();
-    }
-
     private List<Player> getListOfPlayers() {
         List<Player> playerList = new ArrayList<>();
         playerList.add(Player.playerBuilder()
                 .id(1)
                 .username("Player1")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         playerList.add(Player.playerBuilder()
                 .id(2)
                 .username("Player2")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         playerList.add(Player.playerBuilder()
                 .id(3)
                 .username("Player3")
                 .password("1234")
+                .isJoinedARoom(true)
                 .build());
         return playerList;
     }

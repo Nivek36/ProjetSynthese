@@ -15,16 +15,12 @@ public class Player extends User{
     private boolean isBlocked;
     private boolean isJoinedARoom;
 
-    @OneToOne
-    private Room joinedRoom;
-
     @Builder(builderMethodName = "playerBuilder")
-    public Player(int id, String password, String username, boolean isBlocked, boolean isJoinedARoom, Room joinedRoom) {
+    public Player(int id, String password, String username, boolean isBlocked, boolean isJoinedARoom) {
         super.setId(id);
         super.setPassword(password);
         super.setUsername(username);
         this.isBlocked = isBlocked;
         this.isJoinedARoom = isJoinedARoom;
-        this.joinedRoom = joinedRoom;
     }
 }
