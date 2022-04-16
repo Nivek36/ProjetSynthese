@@ -46,4 +46,11 @@ public class RoomController {
                 .map(players -> ResponseEntity.status(HttpStatus.OK).body(players))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @PostMapping("/chose-quiz-for-room/{quizId}/{roomId}")
+    public ResponseEntity<Room> choseQuizForRoom(@PathVariable int quizId, @PathVariable int roomId){
+        return roomService.choseQuizForRoom(quizId, roomId)
+                .map(room -> ResponseEntity.status(HttpStatus.OK).body(room))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

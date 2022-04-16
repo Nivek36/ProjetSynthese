@@ -21,16 +21,20 @@ public class Room {
     private String password;
 
     @OneToOne
+    private Quiz chosenQuiz;
+
+    @OneToOne
     private Player owner;
 
     @OneToMany
     List<Player> roomPlayers;
 
     @Builder(builderMethodName = "roomBuilder")
-    public Room(int idRoom, String name, String password, Player owner, List<Player> roomPlayers) {
+    public Room(int idRoom, String name, String password, Quiz chosenQuiz, Player owner, List<Player> roomPlayers) {
         this.idRoom = idRoom;
         this.name = name;
         this.password = password;
+        this.chosenQuiz = chosenQuiz;
         this.owner = owner;
         this.roomPlayers = roomPlayers;
     }

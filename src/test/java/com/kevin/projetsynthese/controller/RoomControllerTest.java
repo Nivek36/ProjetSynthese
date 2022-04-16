@@ -35,6 +35,7 @@ public class RoomControllerTest {
 
     private Room room;
     private Player player;
+    private Quiz quiz;
 
     @BeforeEach
     void setup() {
@@ -48,6 +49,10 @@ public class RoomControllerTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .build();
+        quiz = Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Best quiz")
                 .build();
     }
 
@@ -75,6 +80,19 @@ public class RoomControllerTest {
         var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), List.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(actuals.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void choseQuizForRoomTest() throws Exception {
+        when(roomService.choseQuizForRoom(quiz.getIdQuiz(), room.getIdRoom())).thenReturn(Optional.of(room));
+
+        MvcResult result = mockMvc.perform(post("/room/chose-quiz-for-room/{quizId}/{roomId}", quiz.getIdQuiz(), room.getIdRoom())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(room))).andReturn();
+
+        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Room.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(room).isEqualTo(actual);
     }
 
     private List<Room> getListOfRooms() {

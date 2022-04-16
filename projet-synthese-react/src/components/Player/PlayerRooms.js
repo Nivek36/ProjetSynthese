@@ -101,6 +101,7 @@ const PlayerRooms = () => {
             // player = res
             setRoomToVerify('')
             setRoomPasswordTry({ ...roomPasswordTry, password: '' })
+            sessionStorage.setItem("room", JSON.stringify(room))
             navigate('/room-to-play', { state: room })
         } else {
             alert("Wrong password")

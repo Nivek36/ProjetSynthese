@@ -4,6 +4,7 @@ import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.model.Room;
 import com.kevin.projetsynthese.repository.PlayerRepository;
+import com.kevin.projetsynthese.repository.QuizRepository;
 import com.kevin.projetsynthese.repository.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,11 +30,15 @@ public class RoomServiceTest {
     @Mock
     private PlayerRepository playerRepository;
 
+    @Mock
+    private QuizRepository quizRepository;
+
     @InjectMocks
     private RoomService roomService;
 
     private Room room;
     private Player player;
+    private Quiz quiz;
 
     @BeforeEach
     void setup() {
@@ -48,6 +53,10 @@ public class RoomServiceTest {
                 .id(1)
                 .password("1234")
                 .username("Toto")
+                .build();
+        quiz = Quiz.quizBuilder()
+                .idQuiz(1)
+                .name("Best quiz")
                 .build();
     }
 
@@ -71,6 +80,15 @@ public class RoomServiceTest {
         final Optional<List<Room>> allRooms = roomService.getAllRooms();
         assertThat(allRooms.get().size()).isEqualTo(3);
         assertThat(allRooms.get().get(0).getIdRoom()).isEqualTo(1);
+    }
+
+    @Test
+    public void choseQuizForRoomTest() {
+        when(quizRepository.findById(quiz.getIdQuiz())).thenReturn(Optional.of(quiz));
+        when(roomRepository.findById(room.getIdRoom())).thenReturn(Optional.of(room));
+        when(roomRepository.save(room)).thenReturn(room);
+        Optional<Room> actual = roomService.choseQuizForRoom(quiz.getIdQuiz(), room.getIdRoom());
+        assertThat(actual.get().getChosenQuiz()).isEqualTo(quiz);
     }
 
     private List<Room> getListOfRooms() {
