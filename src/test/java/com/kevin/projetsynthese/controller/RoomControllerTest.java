@@ -43,6 +43,7 @@ public class RoomControllerTest {
                 .idRoom(1)
                 .name("room1")
                 .password("1234")
+                .isGameStarted(true)
                 .owner(player)
                 .build();
         player = Player.playerBuilder()
@@ -87,6 +88,32 @@ public class RoomControllerTest {
         when(roomService.choseQuizForRoom(quiz.getIdQuiz(), room.getIdRoom())).thenReturn(Optional.of(room));
 
         MvcResult result = mockMvc.perform(post("/room/chose-quiz-for-room/{quizId}/{roomId}", quiz.getIdQuiz(), room.getIdRoom())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(room))).andReturn();
+
+        var actual = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Room.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(room).isEqualTo(actual);
+    }
+
+    @Test
+    public void verifyIfGameStartedTest() throws Exception {
+        when(roomService.verifyIfGameStarted(room.getIdRoom())).thenReturn(Optional.of(true));
+
+        MvcResult result = mockMvc.perform(get("/room/verify-if-game-started/{roomId}", room.getIdRoom())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(actuals).isTrue();
+    }
+
+    @Test
+    public void startGameTest() throws Exception {
+        when(roomService.startGame(room.getIdRoom())).thenReturn(Optional.of(room));
+
+        MvcResult result = mockMvc.perform(post("/room/start-game/{roomId}", room.getIdRoom())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(room))).andReturn();
 

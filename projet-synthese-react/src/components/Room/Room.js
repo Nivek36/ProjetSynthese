@@ -20,12 +20,6 @@ const Room = () => {
         getQuizzes()
     }, [])
 
-    // const verifyPlayersList = async () => {
-    //     setPlayers(await fetchPlayers())
-    // }
-
-    // setInterval(verifyPlayersList, 5000)
-
     const fetchPlayers = async () => {
         const res = await fetch(`http://localhost:8888/room/get-all-players-by-room/${room.idRoom}`)
         return await res.json()
@@ -33,6 +27,11 @@ const Room = () => {
 
     const fetchQuizzes = async (playerId) => {
         const res = await fetch(`http://localhost:8888/quiz/get-all-quizzes-by-player/${playerId}`)
+        return await res.json()
+    }
+
+    const fetchVerificationForGameStart = async () => {
+        const res = await fetch(`http://localhost:8888/room/verify-if-game-started/${room.idRoom}`)
         return await res.json()
     }
 
@@ -53,6 +52,40 @@ const Room = () => {
         return data
     }
 
+    const startGame = async () => {
+        const res = await fetch(`http://localhost:8888/room/start-game/${room.idRoom}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(room)
+            })
+        const data = await res.json()
+
+        sessionStorage.setItem("room", JSON.stringify(data))
+        setRoom(JSON.parse(sessionStorage.getItem("room")))
+
+        return data
+    }
+
+    // const verifyPlayersList = async () => {
+    //     setPlayers(await fetchPlayers())
+    // }
+
+    // setInterval(verifyPlayersList, 5000)
+
+    const verifyIfGameStarted = async () => {
+        let temp = await fetchVerificationForGameStart()
+        if (temp) {
+            console.log("COMMENCÉ")
+            clearInterval(gameStartedVerificationInterval)
+        } else {
+            console.log("PAS COMMENCÉ")
+        }
+    }
+
+    let gameStartedVerificationInterval = setInterval(verifyIfGameStarted, 5000)
 
     return (
         <div>
@@ -87,7 +120,14 @@ const Room = () => {
                 ))}
             </div>
             <div className='mt-5 d-flex justify-content-center'>
-                <button className='btn btn-success' disabled={room.chosenQuiz != null ? false : true}>Start !</button>
+                {room.owner.id === player.id ?
+                    <button
+                        className='btn btn-success'
+                        disabled={room.chosenQuiz != null ? false : true}
+                        onClick={e => { e.preventDefault(); startGame() }}>
+                        Start !
+                    </button>
+                    : ""}
             </div>
         </div>
     )

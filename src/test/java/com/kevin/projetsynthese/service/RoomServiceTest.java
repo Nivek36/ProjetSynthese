@@ -37,6 +37,7 @@ public class RoomServiceTest {
     private RoomService roomService;
 
     private Room room;
+    private Room room2;
     private Player player;
     private Quiz quiz;
 
@@ -47,6 +48,15 @@ public class RoomServiceTest {
                 .name("room1")
                 .password("1234")
                 .owner(player)
+                .isGameStarted(true)
+                .roomPlayers(getListOfPlayers())
+                .build();
+        room2 = Room.roomBuilder()
+                .idRoom(2)
+                .name("room2")
+                .password("1234")
+                .owner(player)
+                .isGameStarted(false)
                 .roomPlayers(getListOfPlayers())
                 .build();
         player = Player.playerBuilder()
@@ -89,6 +99,21 @@ public class RoomServiceTest {
         when(roomRepository.save(room)).thenReturn(room);
         Optional<Room> actual = roomService.choseQuizForRoom(quiz.getIdQuiz(), room.getIdRoom());
         assertThat(actual.get().getChosenQuiz()).isEqualTo(quiz);
+    }
+
+    @Test
+    public void verifyIfGameStartedTest() {
+        when(roomRepository.findById(room.getIdRoom())).thenReturn(Optional.of(room));
+        final Optional<Boolean> actual = roomService.verifyIfGameStarted(room.getIdRoom());
+        assertThat(actual.get()).isTrue();
+    }
+
+    @Test
+    public void startGameTest() {
+        when(roomRepository.findById(room2.getIdRoom())).thenReturn(Optional.of(room2));
+        when(roomRepository.save(room2)).thenReturn(room2);
+        Optional<Room> actual = roomService.startGame(room2.getIdRoom());
+        assertThat(actual.get().isGameStarted()).isTrue();
     }
 
     private List<Room> getListOfRooms() {

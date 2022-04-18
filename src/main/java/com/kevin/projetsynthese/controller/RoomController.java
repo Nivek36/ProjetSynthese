@@ -53,4 +53,18 @@ public class RoomController {
                 .map(room -> ResponseEntity.status(HttpStatus.OK).body(room))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
+
+    @GetMapping("/verify-if-game-started/{roomId}")
+    public ResponseEntity<Boolean> verifyIfGameStarted(@PathVariable int roomId){
+        return roomService.verifyIfGameStarted(roomId)
+                .map(room -> ResponseEntity.status(HttpStatus.OK).body(room))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
+
+    @PostMapping("/start-game/{roomId}")
+    public ResponseEntity<Room> startGame(@PathVariable int roomId){
+        return roomService.startGame(roomId)
+                .map(room -> ResponseEntity.status(HttpStatus.OK).body(room))
+                .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());
+    }
 }

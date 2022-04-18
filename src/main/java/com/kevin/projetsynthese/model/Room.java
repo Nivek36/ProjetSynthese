@@ -20,6 +20,8 @@ public class Room {
     private String name;
     private String password;
 
+    private boolean isGameStarted;
+
     @OneToOne
     private Quiz chosenQuiz;
 
@@ -30,10 +32,11 @@ public class Room {
     List<Player> roomPlayers;
 
     @Builder(builderMethodName = "roomBuilder")
-    public Room(int idRoom, String name, String password, Quiz chosenQuiz, Player owner, List<Player> roomPlayers) {
+    public Room(int idRoom, String name, String password, boolean isGameStarted, Quiz chosenQuiz, Player owner, List<Player> roomPlayers) {
         this.idRoom = idRoom;
         this.name = name;
         this.password = password;
+        this.isGameStarted = isGameStarted;
         this.chosenQuiz = chosenQuiz;
         this.owner = owner;
         this.roomPlayers = roomPlayers;

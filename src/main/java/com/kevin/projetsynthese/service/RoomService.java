@@ -69,4 +69,22 @@ public class RoomService {
             return Optional.empty();
         }
     }
+
+    public Optional<Boolean> verifyIfGameStarted(int roomId) {
+        try {
+            return Optional.of(roomRepository.findById(roomId).get().isGameStarted());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Room> startGame(int roomId) {
+        try {
+            Room tempRoom = roomRepository.findById(roomId).get();
+            tempRoom.setGameStarted(true);
+            return Optional.of(roomRepository.save(tempRoom));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
 }
