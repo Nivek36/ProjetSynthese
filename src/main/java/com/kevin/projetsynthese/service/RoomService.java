@@ -70,9 +70,9 @@ public class RoomService {
         }
     }
 
-    public Optional<Boolean> verifyIfGameStarted(int roomId) {
+    public Optional<Room> verifyIfGameStarted(int roomId) {
         try {
-            return Optional.of(roomRepository.findById(roomId).get().isGameStarted());
+            return Optional.of(roomRepository.findById(roomId).get());
         } catch (Exception e) {
             return Optional.empty();
         }

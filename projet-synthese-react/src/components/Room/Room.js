@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Room = () => {
     const [players, setPlayers] = useState([])
     const player = JSON.parse(sessionStorage.getItem("user"))
     const [room, setRoom] = useState(JSON.parse(sessionStorage.getItem("room")))
     const [quizzes, setQuizzes] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getPlayers = async () => {
@@ -19,6 +20,13 @@ const Room = () => {
         getPlayers()
         getQuizzes()
     }, [])
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            verifyIfGameStarted()
+        }, 5000)
+        return () => clearInterval(timer);
+    });
 
     const fetchPlayers = async () => {
         const res = await fetch(`http://localhost:8888/room/get-all-players-by-room/${room.idRoom}`)
@@ -69,23 +77,18 @@ const Room = () => {
         return data
     }
 
-    // const verifyPlayersList = async () => {
-    //     setPlayers(await fetchPlayers())
-    // }
-
-    // setInterval(verifyPlayersList, 5000)
-
     const verifyIfGameStarted = async () => {
         let temp = await fetchVerificationForGameStart()
-        if (temp) {
-            console.log("COMMENCÉ")
-            clearInterval(gameStartedVerificationInterval)
-        } else {
-            console.log("PAS COMMENCÉ")
+        if (room.chosenQuiz === null) {
+            sessionStorage.setItem("room", JSON.stringify(temp))
+            setRoom(JSON.parse(sessionStorage.getItem("room")))
+        }
+        if (temp.gameStarted) {
+            navigate('/play-quiz-multiplayer')
         }
     }
 
-    let gameStartedVerificationInterval = setInterval(verifyIfGameStarted, 5000)
+    // let gameStartedVerificationInterval = setInterval(verifyIfGameStarted, 5000)
 
     return (
         <div>

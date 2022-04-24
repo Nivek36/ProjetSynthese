@@ -4,10 +4,10 @@ import PlayerNavbar from './PlayerNavbar'
 import { useNavigate } from 'react-router-dom'
 
 const PlayerRooms = () => {
+    const player = JSON.parse(sessionStorage.getItem("user"))
     const [rooms, setRooms] = useState([])
     const [roomToVerify, setRoomToVerify] = useState('')
     const [roomPasswordTry, setRoomPasswordTry] = useState({ password: '' })
-    const player = JSON.parse(sessionStorage.getItem("user"))
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,6 +16,8 @@ const PlayerRooms = () => {
             setRooms(roomsFromServer)
         }
         getRooms()
+        sessionStorage.setItem("room", JSON.stringify(""))
+        sessionStorage.setItem("roomPlayerScores", JSON.stringify(""))
     }, [])
 
     const fetchRooms = async () => {
@@ -50,6 +52,22 @@ const PlayerRooms = () => {
                 body: JSON.stringify(room)
             })
         const data = await res.json()
+
+        return data
+    }
+
+    const createNewScoreForPlayer = async (room) => {
+        const res = await fetch(`http://localhost:8888/roomPlayerScores/create-new-score-for-player`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({player: player, room: room})
+            })
+        const data = await res.json()
+
+        sessionStorage.setItem("roomPlayerScores", JSON.stringify(data))
 
         return data
     }
@@ -90,15 +108,14 @@ const PlayerRooms = () => {
     }
 
     const verifyPassword = async (room) => {
-        // console.log(room)
         if (roomPasswordTry.password === room.password) {
             if (room.roomPlayers.length === 0) {
                 const res = await joinedRoomByPlayer(room)
+                createNewScoreForPlayer(room)
             } else if (room.roomPlayers.find((p) => {return player.id === p.id}) === undefined) {
                 const res = await joinedRoomByPlayer(room)
+                createNewScoreForPlayer(room)
             }
-            // sessionStorage.setItem('user', JSON.stringify(res))
-            // player = res
             setRoomToVerify('')
             setRoomPasswordTry({ ...roomPasswordTry, password: '' })
             sessionStorage.setItem("room", JSON.stringify(room))

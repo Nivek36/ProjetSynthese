@@ -55,7 +55,7 @@ public class RoomController {
     }
 
     @GetMapping("/verify-if-game-started/{roomId}")
-    public ResponseEntity<Boolean> verifyIfGameStarted(@PathVariable int roomId){
+    public ResponseEntity<Room> verifyIfGameStarted(@PathVariable int roomId){
         return roomService.verifyIfGameStarted(roomId)
                 .map(room -> ResponseEntity.status(HttpStatus.OK).body(room))
                 .orElse(ResponseEntity.status(HttpStatus.CONFLICT).build());

@@ -13,6 +13,8 @@ const HomePage = () => {
             setPublishedQuizzes(publishedQuizzesFromServer)
         }
         getPublishedQuizzes()
+        sessionStorage.setItem("room", JSON.stringify(""))
+        sessionStorage.setItem("roomPlayerScores", JSON.stringify(""))
     }, [])
 
     const fetchPublishedQuizzes = async () => {

@@ -29,7 +29,7 @@ public class Room {
     private Player owner;
 
     @OneToMany
-    List<Player> roomPlayers;
+    private List<Player> roomPlayers;
 
     @Builder(builderMethodName = "roomBuilder")
     public Room(int idRoom, String name, String password, boolean isGameStarted, Quiz chosenQuiz, Player owner, List<Player> roomPlayers) {

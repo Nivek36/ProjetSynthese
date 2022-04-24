@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kevin.projetsynthese.model.Player;
 import com.kevin.projetsynthese.model.Quiz;
 import com.kevin.projetsynthese.model.Room;
+import com.kevin.projetsynthese.model.RoomPlayerScores;
 import com.kevin.projetsynthese.service.RoomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,15 +99,15 @@ public class RoomControllerTest {
 
     @Test
     public void verifyIfGameStartedTest() throws Exception {
-        when(roomService.verifyIfGameStarted(room.getIdRoom())).thenReturn(Optional.of(true));
+        when(roomService.verifyIfGameStarted(room.getIdRoom())).thenReturn(Optional.of(room));
 
         MvcResult result = mockMvc.perform(get("/room/verify-if-game-started/{roomId}", room.getIdRoom())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Boolean.class);
+        var actuals = new ObjectMapper().readValue(result.getResponse().getContentAsString(), Room.class);
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(actuals).isTrue();
+        assertThat(actuals.isGameStarted()).isTrue();
     }
 
     @Test

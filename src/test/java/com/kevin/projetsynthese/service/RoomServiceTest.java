@@ -1,8 +1,6 @@
 package com.kevin.projetsynthese.service;
 
-import com.kevin.projetsynthese.model.Player;
-import com.kevin.projetsynthese.model.Quiz;
-import com.kevin.projetsynthese.model.Room;
+import com.kevin.projetsynthese.model.*;
 import com.kevin.projetsynthese.repository.PlayerRepository;
 import com.kevin.projetsynthese.repository.QuizRepository;
 import com.kevin.projetsynthese.repository.RoomRepository;
@@ -104,8 +102,8 @@ public class RoomServiceTest {
     @Test
     public void verifyIfGameStartedTest() {
         when(roomRepository.findById(room.getIdRoom())).thenReturn(Optional.of(room));
-        final Optional<Boolean> actual = roomService.verifyIfGameStarted(room.getIdRoom());
-        assertThat(actual.get()).isTrue();
+        final Optional<Room> actual = roomService.verifyIfGameStarted(room.getIdRoom());
+        assertThat(actual.get().isGameStarted()).isTrue();
     }
 
     @Test
