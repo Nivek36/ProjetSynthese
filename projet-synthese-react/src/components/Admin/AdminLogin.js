@@ -14,7 +14,7 @@ const AdminLogin = () => {
 
     const onLoginSucceded = (data) => {
         sessionStorage.setItem("user", JSON.stringify(data))
-        navigate("/admin-homepage")
+        navigate("/admin-quizzes")
     }
 
     const adminLogin = async (username, password) => {

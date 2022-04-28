@@ -18,8 +18,7 @@ const AdminNavbar = () => {
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="fas fa-bars"></span>
                     </button>
-                    <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
-                        <Link className='btn btn-primary mx-2' to="/admin-homepage">Home Page</Link>
+                    <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                         <div className="dropdown">
                             <button className="btn btn-primary rounded-pill dropdown-toggle mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 {admin.username + " "}
