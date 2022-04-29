@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import Footer from '../Footer/Footer';
 import QuizDisplayFormForQuestionModification from './QuizDisplayFormForQuestionModification';
+import QuizDisplayTitleFormModification from './QuizDisplayTitleFormModification';
 
 const Quiz = () => {
     const navigate = useNavigate();
@@ -101,32 +102,6 @@ const Quiz = () => {
         )
     }
 
-    const modifyQuizNameAndDescription = async () => {
-        if (modifiedQuizNameAndDescription.name !== '' && modifiedQuizNameAndDescription.description !== ''
-            && (modifiedQuizNameAndDescription.name !== quiz.name || modifiedQuizNameAndDescription.description !== quiz.description)) {
-
-            let tempQuiz = quiz
-            tempQuiz.name = modifiedQuizNameAndDescription.name
-            tempQuiz.description = modifiedQuizNameAndDescription.description
-            const result = await fetch('http://localhost:8888/quiz/modify_quiz_name_and_description',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(tempQuiz)
-                })
-            const data = await result.json()
-
-            setIsQuizNameAndDecriptionModified(false)
-            setQuiz(tempQuiz)
-
-            return data;
-        }
-        alert('Fields are empty or not modified!')
-
-    }
-
     const displayTitle = () => {
         return (
             <div>
@@ -134,10 +109,11 @@ const Quiz = () => {
                     {quiz.name}
                     <button
                         className='btn btn-primary btn-sm mx-3'
-                        onClick={e => { 
-                            e.preventDefault(); 
+                        onClick={e => {
+                            e.preventDefault();
                             setmodifiedQuizNameAndDescription({ name: quiz.name, description: quiz.description });
-                            setIsQuizNameAndDecriptionModified(true) }}>
+                            setIsQuizNameAndDecriptionModified(true)
+                        }}>
                         <i className="fas fa-pen-to-square"></i>
                     </button>
                 </h2>
@@ -146,49 +122,16 @@ const Quiz = () => {
         )
     }
 
-    const displayTitleFormModification = () => {
-        return (
-            <div className="card border-secondary my-5 mx-5 shadow">
-                <h5 className="card-header">Modify quiz name and description</h5>
-                <div className="card-body">
-                    <form className='mx-3'>
-                        <div className="mb-3">
-                            <label htmlFor="modifiedQuizName" className="form-label">Name: </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="modifiedQuizName"
-                                defaultValue={quiz.name}
-                                onChange={(e) => setmodifiedQuizNameAndDescription({ ...modifiedQuizNameAndDescription, name: e.target.value })} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="modifiedQuizDescription" className="form-label">Description: </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="modifiedQuizDescription"
-                                defaultValue={quiz.description}
-                                onChange={(e) => setmodifiedQuizNameAndDescription({ ...modifiedQuizNameAndDescription, description: e.target.value })} />
-                        </div>
-                        <button
-                            className='btn btn-success btn-sm me-2'
-                            onClick={e => { e.preventDefault(); modifyQuizNameAndDescription() }}>
-                            Modify
-                        </button>
-                        <button
-                            className='btn btn-danger btn-sm me-2'
-                            onClick={e => { e.preventDefault(); setIsQuizNameAndDecriptionModified(false) }}>
-                            Cancel
-                        </button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div>
-            {isQuizNameAndDecriptionModified ? displayTitleFormModification() : displayTitle()}
+            {isQuizNameAndDecriptionModified ?
+                <QuizDisplayTitleFormModification
+                    modifiedQuizNameAndDescription={modifiedQuizNameAndDescription}
+                    quiz={quiz}
+                    setQuiz={setQuiz}
+                    setIsQuizNameAndDecriptionModified={setIsQuizNameAndDecriptionModified}
+                    setmodifiedQuizNameAndDescription={setmodifiedQuizNameAndDescription} />
+                : displayTitle()}
             <div>
                 <button
                     className='btn btn-secondary mb-5 mx-5'
@@ -221,14 +164,14 @@ const Quiz = () => {
                 {questions
                     .map((question, index) => (
                         questionToModify === '' + question.idQuestion ?
-                            <QuizDisplayFormForQuestionModification key={index} 
-                            question={question} 
-                            setQuestions={setQuestions}
-                            modifiedQuestion={modifiedQuestion} 
-                            setModifiedQuestion={setModifiedQuestion} 
-                            setQuestionToModify={setQuestionToModify} 
-                            fetchQuestions={fetchQuestions} 
-                            quiz={quiz} />
+                            <QuizDisplayFormForQuestionModification key={index}
+                                question={question}
+                                setQuestions={setQuestions}
+                                modifiedQuestion={modifiedQuestion}
+                                setModifiedQuestion={setModifiedQuestion}
+                                setQuestionToModify={setQuestionToModify}
+                                fetchQuestions={fetchQuestions}
+                                quiz={quiz} />
                             : displayQuestion(question)
                     ))}
             </div>
