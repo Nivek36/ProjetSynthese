@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Footer from '../Footer/Footer';
 import QuizDisplayFormForQuestionModification from './QuizDisplayFormForQuestionModification';
 import QuizDisplayTitleFormModification from './QuizDisplayTitleFormModification';
+import QuizDisplayTitle from './QuizDisplayTitle';
 
 const Quiz = () => {
     const navigate = useNavigate();
@@ -102,25 +103,25 @@ const Quiz = () => {
         )
     }
 
-    const displayTitle = () => {
-        return (
-            <div>
-                <h2 className='text-center mt-5'>
-                    {quiz.name}
-                    <button
-                        className='btn btn-primary btn-sm mx-3'
-                        onClick={e => {
-                            e.preventDefault();
-                            setmodifiedQuizNameAndDescription({ name: quiz.name, description: quiz.description });
-                            setIsQuizNameAndDecriptionModified(true)
-                        }}>
-                        <i className="fas fa-pen-to-square"></i>
-                    </button>
-                </h2>
-                <h5 className='mb-5 text-center'>{quiz.description}</h5>
-            </div>
-        )
-    }
+    // const displayTitle = () => {
+    //     return (
+    //         <div>
+    //             <h2 className='text-center mt-5'>
+    //                 {quiz.name}
+    //                 <button
+    //                     className='btn btn-primary btn-sm mx-3'
+    //                     onClick={e => {
+    //                         e.preventDefault();
+    //                         setmodifiedQuizNameAndDescription({ name: quiz.name, description: quiz.description });
+    //                         setIsQuizNameAndDecriptionModified(true)
+    //                     }}>
+    //                     <i className="fas fa-pen-to-square"></i>
+    //                 </button>
+    //             </h2>
+    //             <h5 className='mb-5 text-center'>{quiz.description}</h5>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div>
@@ -131,7 +132,10 @@ const Quiz = () => {
                     setQuiz={setQuiz}
                     setIsQuizNameAndDecriptionModified={setIsQuizNameAndDecriptionModified}
                     setmodifiedQuizNameAndDescription={setmodifiedQuizNameAndDescription} />
-                : displayTitle()}
+                : <QuizDisplayTitle
+                    quiz={quiz}
+                    setmodifiedQuizNameAndDescription={setmodifiedQuizNameAndDescription}
+                    setIsQuizNameAndDecriptionModified={setIsQuizNameAndDecriptionModified} />}
             <div>
                 <button
                     className='btn btn-secondary mb-5 mx-5'
