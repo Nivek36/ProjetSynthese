@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import QuizDisplayFormForQuestionModification from './QuizDisplayFormForQuestionModification';
 import QuizDisplayTitleFormModification from './QuizDisplayTitleFormModification';
 import QuizDisplayTitle from './QuizDisplayTitle';
+import QuizDisplayQuestion from './QuizDisplayQuestion';
 
 const Quiz = () => {
     const navigate = useNavigate();
@@ -63,66 +64,6 @@ const Quiz = () => {
         return data;
     }
 
-    const deleteQuestion = async (questionId) => {
-        const result = await fetch(`http://localhost:8888/question/delete-question/${questionId}`,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify(questionId)
-            })
-
-        setQuestions(await fetchQuestions(quiz.idQuiz))
-    }
-
-    const displayQuestion = (question) => {
-        return (
-            <div key={question.idQuestion} className="card border-secondary mt-5 mx-5 shadow">
-                <div className="card-body">
-                    <h5 className="card-title">{question.question}</h5>
-                    <p className="card-text">{question.answer}</p>
-                </div>
-                <div className="card-footer border-secondary justify-content-end d-flex">
-                    <button
-                        className='btn btn-secondary btn-sm mx-2'
-                        onClick={e => {
-                            e.preventDefault();
-                            setModifiedQuestion({ question: question.question, answer: question.answer });
-                            setQuestionToModify('' + question.idQuestion)
-                        }}>
-                        <i className="fas fa-pen"></i> Modify
-                    </button>
-                    <button
-                        className='btn btn-danger btn-sm mx-2'
-                        onClick={e => { e.preventDefault(); deleteQuestion(question.idQuestion) }}>
-                        <i className="fas fa-xmark"></i> Delete
-                    </button>
-                </div>
-            </div>
-        )
-    }
-
-    // const displayTitle = () => {
-    //     return (
-    //         <div>
-    //             <h2 className='text-center mt-5'>
-    //                 {quiz.name}
-    //                 <button
-    //                     className='btn btn-primary btn-sm mx-3'
-    //                     onClick={e => {
-    //                         e.preventDefault();
-    //                         setmodifiedQuizNameAndDescription({ name: quiz.name, description: quiz.description });
-    //                         setIsQuizNameAndDecriptionModified(true)
-    //                     }}>
-    //                     <i className="fas fa-pen-to-square"></i>
-    //                 </button>
-    //             </h2>
-    //             <h5 className='mb-5 text-center'>{quiz.description}</h5>
-    //         </div>
-    //     )
-    // }
-
     return (
         <div>
             {isQuizNameAndDecriptionModified ?
@@ -176,7 +117,13 @@ const Quiz = () => {
                                 setQuestionToModify={setQuestionToModify}
                                 fetchQuestions={fetchQuestions}
                                 quiz={quiz} />
-                            : displayQuestion(question)
+                            : <QuizDisplayQuestion key={index}
+                                question={question}
+                                setQuestions={setQuestions}
+                                setModifiedQuestion={setModifiedQuestion}
+                                setQuestionToModify={setQuestionToModify}
+                                fetchQuestions={fetchQuestions}
+                                quiz={quiz} />
                     ))}
             </div>
             <Footer />
