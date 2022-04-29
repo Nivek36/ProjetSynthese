@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import DisplayQuizInstructions from './DisplayQuizInstructions';
 import DisplayQuizAnswers from './DisplayQuizAnswers';
 import DisplayQuizQuestions from './DisplayQuizQuestions';

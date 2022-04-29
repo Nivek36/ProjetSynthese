@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const Room = () => {
     const [players, setPlayers] = useState([])
@@ -88,13 +88,11 @@ const Room = () => {
         }
     }
 
-    // let gameStartedVerificationInterval = setInterval(verifyIfGameStarted, 5000)
-
     return (
         <div>
             <h2 className='text-center text-color mt-5'>{room.name}</h2>
-            <h5 className='text-center text-color mb-5'>It will start soon...</h5>
-            {room.owner.id === player.id ? <div className="dropdown mx-5">
+            <h5 className='text-center text-color mb-5'>Starting soon...</h5>
+            {room.owner.id === player.id ? <div className="dropdown mx-4">
                 <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     {room.chosenQuiz != null ? room.chosenQuiz.name : "Choose a quiz"}
                 </button>
@@ -109,12 +107,11 @@ const Room = () => {
                         </li>
                     ))}
                 </ul>
-            </div>
-                : ""}
-            <div className='row mx-5'>
+            </div> : ""}
+            <div className='row'>
                 {players.map((player, index) => (
                     <div key={index} className="col-4">
-                        <div className="card border-primary mt-3 mx-2 shadow">
+                        <div className="card border-primary mt-3 mx-4 shadow">
                             <div className="card-body">
                                 <h5 className="card-title text-center">{player.username}</h5>
                             </div>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-import './Registration.css'
 import SvgImage from '../SvgImage';
 import NavbarRegistrationLogin from '../NavbarRegistrationLogin/NavbarRegistrationLogin';
 import Footer from '../Footer/Footer'
+import './Registration.css'
 
 const Registration = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();

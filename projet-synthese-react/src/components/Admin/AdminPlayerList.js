@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
+import Footer from '../Footer/Footer'
 
 const AdminPlayerList = () => {
     const [players, setPlayers] = useState([])
@@ -98,6 +99,7 @@ const AdminPlayerList = () => {
                     </tbody>
                 </table>
             </div>
+            <Footer />
         </div>
     )
 }

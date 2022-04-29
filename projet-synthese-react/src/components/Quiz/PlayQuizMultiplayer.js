@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
 import DisplayQuizAnswerMultiplayer from './DisplayQuizAnswerMultiplayer';
 import DisplayQuizInstructions from './DisplayQuizInstructions';
 import DisplayQuizQuestions from './DisplayQuizQuestions';
 
 const PlayQuizMultiplayer = () => {
-    const location = useLocation();
     const [room, setRoom] = useState(JSON.parse(sessionStorage.getItem("room")))
     const quiz = room.chosenQuiz
     const TIMER_DELAY = 300

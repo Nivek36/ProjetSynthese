@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import Footer from '../Footer/Footer';
-import ModifyQuestion from './ModifyQuestion';
 
 const Quiz = () => {
     const navigate = useNavigate();

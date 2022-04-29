@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 const DisplayQuizAnswerMultiplayer = ({ questions, answers }) => {
     const [playersScores, setPlayersScores] = useState([]);
-    const player = JSON.parse(sessionStorage.getItem("user"))
     const [room, setRoom] = useState(JSON.parse(sessionStorage.getItem("room")))
     const [roomPlayerScores, setRoomPlayerScores] = useState(JSON.parse(sessionStorage.getItem("roomPlayerScores")))
     let totalGoodAnswers = 0
@@ -32,9 +31,6 @@ const DisplayQuizAnswerMultiplayer = ({ questions, answers }) => {
         const data = await res.json()
 
         console.log(data)
-
-        // sessionStorage.setItem("room", JSON.stringify(data))
-        // setRoom(JSON.parse(sessionStorage.getItem("room")))
 
         return data
     }
@@ -98,8 +94,7 @@ const DisplayQuizAnswerMultiplayer = ({ questions, answers }) => {
                     ))}
             </div>
             <div className='d-flex justify-content-between m-5'>
-                <Link 
-                className='btn btn-secondary' to='/HomePage'><i className="fas fa-angles-left"></i> Leave</Link>
+                <Link className='btn btn-secondary' to='/HomePage'><i className="fas fa-angles-left"></i> Leave</Link>
                 <h4>Your score: {totalGoodAnswers + "/" + questions.length}</h4>
             </div>
         </div>
