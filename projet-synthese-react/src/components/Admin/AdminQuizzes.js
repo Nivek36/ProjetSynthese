@@ -134,6 +134,7 @@ const AdminQuizzes = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{quiz.name}</h5>
                                 <p className="card-text">{quiz.description}</p>
+                                <p className="card-text">By: {quiz.player != null ? quiz.player.username : "Quiz.io"}</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
                                 <button

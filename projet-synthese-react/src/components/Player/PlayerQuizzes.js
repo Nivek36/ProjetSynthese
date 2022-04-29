@@ -111,7 +111,7 @@ const PlayerQuizzes = () => {
                     .map((quiz) => (
                         <div key={quiz.idQuiz} className="card border-primary mt-3 mx-5 shadow">
                             <div className="card-body">
-                                <h5 className="card-title">{quiz.name}</h5>
+                                <h5 className="card-title">{quiz.name} {quiz.blocked ? <span className="badge bg-danger rounded-pill">Blocked</span> : ""}</h5>
                                 <p className="card-text">{quiz.description}</p>
                             </div>
                             <div className="card-footer border-primary justify-content-end d-flex">
